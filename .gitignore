@@ -32,5 +32,5 @@ hs_err_pid*
 
 /.idea
 
-/CSCenter.iml
+/*.iml
 # Created by .ignore support plugin (hsz.mobi)
