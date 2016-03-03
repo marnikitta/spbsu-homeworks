@@ -15,6 +15,14 @@ public class Weight {
         return weight;
     }
 
+    public Vector2D getForce() {
+        return force;
+    }
+
+    public Vector2D getVelocity() {
+        return velocity;
+    }
+
     public Weight(Vector2D position) {
         this.position = position;
     }
@@ -28,7 +36,7 @@ public class Weight {
         this.force = new Vector2D(0,0);
     }
     public void addForce(Vector2D force) {
-        this.force.add(force);
+        this.force = this.force.add(force);
     }
 
     public Vector2D getPosition() {
@@ -37,7 +45,10 @@ public class Weight {
 
     public void simulate(double dt) {
         velocity = velocity.add(force.scalarMultiply(dt / weight));
-        System.out.println(velocity);
         position = position.add(velocity.scalarMultiply(dt));
+    }
+
+    public void reverse(double coef) {
+        this.velocity = this.velocity.scalarMultiply(-1 * coef);
     }
 }

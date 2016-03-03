@@ -7,7 +7,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import org.tomat.spbsu.sakod.bball.base.SimulationSystem;
 
 
 public class JumpingBall extends Application {
@@ -26,11 +25,11 @@ public class JumpingBall extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Drawing Operations Test");
-        primaryStage.setWidth(400);
-        primaryStage.setHeight(300);
+        primaryStage.setWidth(1000);
+        primaryStage.setHeight(600);
         primaryStage.setResizable(false);
         Group root = new Group();
-        Canvas canvas = new Canvas(400, 300);
+        Canvas canvas = new Canvas(1000, 600);
         root.getChildren().add(canvas);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
@@ -46,7 +45,7 @@ public class JumpingBall extends Application {
                 if (now - then > 1E7) {
                     double dt = (now - then) / 1E9;
                     constantVelocity.operate(dt);
-                    gc.clearRect(0, 0, 400, 300);
+                    gc.clearRect(0, 0, 1000, 600);
                     constantVelocity.draw(gc);
                     then = now;
                 }
