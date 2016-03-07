@@ -4,8 +4,10 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 public class Weight {
     private Vector2D position = new Vector2D(10, 10);
-    private Vector2D force = new Vector2D(0,5000);
-    private Vector2D velocity = new Vector2D(50, 0);
+    private Vector2D force = new Vector2D(0, 5000);
+    Vector2D velocity = new Vector2D(50, 0);
+    private Vector2D previousPosition = new Vector2D(10, 10);
+
     private double weight = 100;
 
     public Weight() {
@@ -23,18 +25,27 @@ public class Weight {
         return velocity;
     }
 
+    public Vector2D getPreviousPosition() {
+        return previousPosition;
+    }
     public Weight(Vector2D position) {
         this.position = position;
     }
 
+    public void stepBack() {
+        position = previousPosition;
+    }
+
     public Weight(Vector2D position, Vector2D velocity) {
         this.position = position;
+        this.previousPosition = position;
         this.velocity = velocity;
     }
 
     public void initForce() {
-        this.force = new Vector2D(0,0);
+        this.force = new Vector2D(0, 0);
     }
+
     public void addForce(Vector2D force) {
         this.force = this.force.add(force);
     }
@@ -43,8 +54,9 @@ public class Weight {
         return position;
     }
 
-    public void simulate(double dt) {
+    public synchronized void simulate(double dt) {
         velocity = velocity.add(force.scalarMultiply(dt / weight));
+        previousPosition = position;
         position = position.add(velocity.scalarMultiply(dt));
     }
 

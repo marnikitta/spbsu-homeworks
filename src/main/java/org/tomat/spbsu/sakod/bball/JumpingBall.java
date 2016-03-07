@@ -10,12 +10,15 @@ import javafx.scene.Scene;
 
 
 public class JumpingBall extends Application {
-    public final static double G = 9.8;
-    public final static int H = 40;
-    public final static double V_0 = 5;
-    public final static double BOUNCE = 100;
-    public final static double RADIUS = H;
-    ConstantVelocity constantVelocity = new ConstantVelocity();
+    public final static double G = 150;
+    public final static double V_0 = 600;
+    public final static double BOUNCE = 0.9;
+    public final static double RADIUS = 50;
+    public final static double WIDTH = 1000;
+    public final static double HEIGHT = 700;
+    public final static double RESTART = 5;
+
+    ConstantVelocity constantVelocity = new ConstantVelocity(G, V_0, BOUNCE, RADIUS, WIDTH, HEIGHT);
 
 
     public static void main(String[] args) {
@@ -25,11 +28,11 @@ public class JumpingBall extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Drawing Operations Test");
-        primaryStage.setWidth(1000);
-        primaryStage.setHeight(600);
+        primaryStage.setWidth(WIDTH);
+        primaryStage.setHeight(HEIGHT);
         primaryStage.setResizable(false);
         Group root = new Group();
-        Canvas canvas = new Canvas(1000, 600);
+        Canvas canvas = new Canvas(WIDTH, HEIGHT);
         root.getChildren().add(canvas);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
@@ -42,11 +45,13 @@ public class JumpingBall extends Application {
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (now - then > 1E7) {
+                if (now - then > 1E6) {
                     double dt = (now - then) / 1E9;
+
                     constantVelocity.operate(dt);
-                    gc.clearRect(0, 0, 1000, 600);
+                    gc.clearRect(0, 0, WIDTH, HEIGHT);
                     constantVelocity.draw(gc);
+
                     then = now;
                 }
             }

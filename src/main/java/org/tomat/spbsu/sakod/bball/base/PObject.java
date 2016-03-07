@@ -4,8 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 public abstract class PObject {
-    public Weight weight = new Weight();
-    protected boolean fixed = false;
+    protected Weight weight = new Weight();
+    protected boolean fixed;
 
     public void simulate(double time) {
         weight.simulate(time);
@@ -17,6 +17,23 @@ public abstract class PObject {
 
     public void addForce(Vector2D f) {
         weight.addForce(f);
+    }
+
+    public Vector2D getVelocity() {
+        return weight.getVelocity();
+    }
+
+    public Vector2D getPreviousPosition() {
+        return weight.getPreviousPosition();
+    }
+
+    public void stepBack() {
+        weight.stepBack();
+    }
+
+
+    public boolean isFixed() {
+        return fixed;
     }
 
     public double getWeight() {
