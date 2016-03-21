@@ -10,9 +10,9 @@ import javafx.scene.Scene;
 
 
 public class JumpingBall extends Application {
-    public final static double G = 150;
-    public final static double V_0 = 600;
-    public final static double BOUNCE = 0.9;
+    public final static double G = 250;
+    public final static double V_0 = 800;
+    public final static double BOUNCE = 0.80;
     public final static double RADIUS = 50;
     public final static double WIDTH = 1000;
     public final static double HEIGHT = 700;

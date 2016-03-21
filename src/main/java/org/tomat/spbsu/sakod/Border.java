@@ -38,6 +38,7 @@ public class Border {
                 set.add(e3);
             }
         }
+        sc.close();
         System.out.println(set.size());
     }
 

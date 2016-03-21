@@ -42,9 +42,6 @@ public class PPlane extends PObject {
         Vector2D position222 = position.add(direction);
         double v1 = position1.crossProduct(position, position222);
         double v2 = position2.crossProduct(position, position222);
-        if (v1 * v2 < 0) {
-            System.out.println();
-        }
         return v1 * v2 < 0;
     }
 }
