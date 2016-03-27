@@ -4,17 +4,11 @@ import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.shape.*;
 
