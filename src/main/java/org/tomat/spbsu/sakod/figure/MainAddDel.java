@@ -41,7 +41,7 @@ public class MainAddDel extends Application {
                     root.getChildren().add(sh);
 
                 } else {
-                    Group sh = new Another();
+                    Group sh = new Serpin();
                     sh.setOnMousePressed(e1 -> {
                         if (e1.getButton() == MouseButton.SECONDARY) {
                             root.getChildren().remove(sh);

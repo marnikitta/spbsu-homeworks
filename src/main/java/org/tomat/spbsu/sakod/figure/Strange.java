@@ -8,7 +8,7 @@ import javafx.scene.shape.Shape;
 
 public class Strange extends MyShape {
     private double r = 80;
-    private int n = 9;
+    private int n = 12;
 
     public Strange() {
         super();
@@ -20,11 +20,12 @@ public class Strange extends MyShape {
         }
         Shape poly = new Polygon(point);
         poly.setFill(Color.TRANSPARENT);
+        poly.setStrokeWidth(1);
         this.getChildren().add(poly);
         for (int i = 0; i < point.length / 2; ++i) {
             for (int k = i + 1; k < point.length / 2; ++k) {
                 Line l = new Line(point[2 * i], point[2 * i + 1], point[2 * k], point[2 * k + 1]);
-                l.setStrokeWidth(2);
+                l.setStrokeWidth(1);
                 l.setStroke(Color.BLACK);
                 this.getChildren().add(l);
             }
