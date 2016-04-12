@@ -30,7 +30,7 @@ public class MainAddDel extends Application {
         root.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
                 if (e.isControlDown()) {
-                    MyShape sh = new Strange();
+                    MyShape sh = new Border(new Strange());
                     sh.setOnMousePressed(e1 -> {
                         if (e1.getButton() == MouseButton.SECONDARY) {
                             root.getChildren().remove(sh);
