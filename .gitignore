@@ -1,3 +1,6 @@
+/.settings
+/.classpath
+/.project
 ### Java template
 *.class
 ### R template
