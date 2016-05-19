@@ -39,7 +39,6 @@ public class MainAddDel extends Application {
                     sh.setLayoutX(e.getX());
                     sh.setLayoutY(e.getY());
                     root.getChildren().add(sh);
-
                 } else {
                     Group sh = new Serpin();
                     sh.setOnMousePressed(e1 -> {
@@ -50,15 +49,10 @@ public class MainAddDel extends Application {
                     sh.setLayoutX(e.getX());
                     sh.setLayoutY(e.getY());
                     root.getChildren().add(sh);
-
                 }
             }
         });
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();
     }
-
-
 }
-
-
