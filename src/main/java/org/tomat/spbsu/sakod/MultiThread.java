@@ -2,61 +2,49 @@ package org.tomat.spbsu.sakod;
 
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
 
 public class MultiThread {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
 
-        new MultiThread().runNaive(n);
-
         new MultiThread().runMulti(n);
     }
 
-    public void runNaive(int n) {
-        long start = System.nanoTime();
-        int[] cubes = new int[n];
+    public class OddThread extends Thread {
+        private Set<Long> set = new HashSet<>();
+        private long[] powers;
+        private int n;
+        private int step = 1;
+        private Waiting w;
 
-        for (int i = 0; i < n; ++i) {
-            cubes[i] = i * i * i;
-        }
-        HashSet<Integer> set = new HashSet<>();
-        for (int i = 1; i < n; ++i) {
-            for (int j = i; j < n; ++j) {
-                if (cubes[i] + cubes[j] < n) {
-                    set.add(cubes[i] + cubes[j]);
-                }
-            }
-        }
-        System.out.println("Naive: " + set.size() + ". Time: " + (System.nanoTime() - start) / 1E9);
-    }
-
-    private ConcurrentHashMap<Integer, Integer> result = new ConcurrentHashMap<>();
-
-    public class MyThread extends Thread {
-        private final int start;
-        private final int n;
-        private Waiting waiting;
-
-        public MyThread(int start, int n, Waiting w) {
-            this.start = start;
+        public OddThread(int n, int step, Waiting w) {
             this.n = n;
-            this.waiting = w;
+            this.powers = new long[n];
+            this.step = step;
+            this.w = w;
         }
 
         @Override
         public void run() {
-            for (int i = start; i < n; ++i) {
-                for (int j = i; j < n; ++j) {
-                    int c = i * i * i + j * j * j;
-                    if (c < n) {
-                        result.putIfAbsent(c, c);
+            // Бежит либо по чет-чет + нечет -нечет, либо по нечет - чет, в зависимости от step
+            for (int i = 1; i < n; i += step) {
+                int start = step == 2 ? 2 : i;
+                for (int j = start; j < n; j += 2) {
+                    if (powers[i] == 0) {
+                        powers[i] = (long) i * i * i;
                     }
-                    Thread.yield();
+                    if (powers[j] == 0) {
+                        powers[j] = (long) j * j * j;
+                    }
+
+                    if (powers[i] + powers[j] < n) {
+                        set.add(powers[i] + powers[j]);
+                    }
                 }
             }
-            waiting.imFinish();
+            w.imFinish(this);
         }
     }
 
@@ -65,20 +53,25 @@ public class MultiThread {
     public void runMulti(int n) {
         myStart = System.nanoTime();
         Waiting waiting = new Waiting();
-        MyThread half = new MyThread(1, n, waiting);
-        MyThread second = new MyThread((n >> 1) - 1, n, waiting);
 
-        half.start();
-        second.start();
+        OddThread th1 = new OddThread(n, 1, waiting);
+        OddThread th2 = new OddThread(n, 2, waiting);
+
+        th1.start();
+        th2.start();
     }
 
     public class Waiting {
         private volatile int counter = 0;
+        private int result = 0;
 
-        public void imFinish() {
+        public synchronized void imFinish(OddThread th) {
+            result += th.set.size();
+
             counter++;
+
             if (counter == 2) {
-                System.out.println("Multi: " + result.size() + ". Time: " + (System.nanoTime() - myStart) / 1E9);
+                System.out.println("Multi: " + result + ". Time: " + (System.nanoTime() - myStart) / 1E9);
             }
         }
     }
