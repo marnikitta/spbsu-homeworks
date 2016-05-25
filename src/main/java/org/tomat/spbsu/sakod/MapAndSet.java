@@ -8,9 +8,9 @@ import java.util.*;
  * и при этом геометрически смовпадающие квадраты считались бы равными.
  * Например, квалрат с центром (1,1) и вершиной (2,4) должен быть равен квадрату с центром (1,1) и вершиной (0,-1).
  * Определите необходимые для этого методы.
-
- Напишите программу, которая вводит данные о нескольких квадратах, пока какой нибудь квалрат не повторится,
- и выводит количество введенных квадратов. При этом, пожалуйста используйте Dictionary или HashSet, где ключи – это квадраты.
+ * <p>
+ * Напишите программу, которая вводит данные о нескольких квадратах, пока какой нибудь квалрат не повторится,
+ * и выводит количество введенных квадратов. При этом, пожалуйста используйте Dictionary или HashSet, где ключи – это квадраты.
  */
 
 public class MapAndSet {
@@ -68,10 +68,16 @@ public class MapAndSet {
         private int yCorner;
 
         public Square(int xCenter, int yCenter, int xCorner, int yCorner) {
+            int dX = xCorner - xCenter;
+            int dY = yCorner - yCenter;
+
+            int xTrueCorner = dX * dY >= 0 ? xCenter - Math.abs(dX) : xCenter - Math.abs(dY);
+            int yTrueCorner = dX * dY < 0 ? xCenter - Math.abs(dY) : xCenter - Math.abs(dX);
+
             this.xCenter = xCenter;
             this.yCenter = yCenter;
-            this.xCorner = xCorner;
-            this.yCorner = yCorner;
+            this.xCorner = xTrueCorner;
+            this.yCorner = yTrueCorner;
         }
 
         @Override
@@ -82,47 +88,30 @@ public class MapAndSet {
             Square square = (Square) o;
 
             if (xCenter != square.xCenter) return false;
-
-            int dist = (xCorner - xCenter) * (xCorner - xCenter)
-                    + (yCorner - yCenter) * (yCorner - yCenter);
-            int distO = (square.xCorner - square.xCenter) * (square.xCorner - square.xCenter)
-                    + (square.yCorner - square.yCenter) * (square.yCorner - square.yCenter);
-            if (dist != distO) return false;
-
-            int d = Math.abs(square.xCenter - square.xCorner);
-            int d1 = Math.abs(square.xCenter - square.xCorner);
-            int d2 = Math.abs(square.xCenter - square.yCorner);
-
-            return d == d1 || d == d2;
-
+            if (yCenter != square.yCenter) return false;
+            if (xCorner != square.xCorner) return false;
+            return yCorner == square.yCorner;
         }
 
-        /***
-         * В качестве хеша используем центр и квадрат расстояния до центра
-         */
         @Override
         public int hashCode() {
             int result = xCenter;
             result = 31 * result + yCenter;
-            int dist = (xCorner - xCenter) * (xCorner - xCenter)
-                    + (yCorner - yCenter) * (yCorner - yCenter);
-            result = 31 * result + dist;
+            result = 31 * result + xCorner;
+            result = 31 * result + yCorner;
             return result;
         }
 
         /***
          * Квадрат однозначно задает центр, расстояние до центра и наименьшее из расстояний по x-у до одной из вершин
-         *
+         * <p>
          * Расстояние по x-у о центра до вершин может принимать не более двух различных значений
          */
         public String getKey() {
             StringBuilder sb = new StringBuilder();
             sb.append(xCenter).append(',').append(yCenter)
                     .append('#')
-                    .append((xCorner - xCenter) * (xCorner - xCenter)
-                            + (yCorner - yCenter) * (yCorner - yCenter))
-                    .append('#')
-                    .append(Math.min(Math.abs(xCenter - xCorner), Math.abs(xCenter - yCorner)));
+                    .append(xCorner).append(',').append(yCorner);
             return sb.toString();
         }
     }
