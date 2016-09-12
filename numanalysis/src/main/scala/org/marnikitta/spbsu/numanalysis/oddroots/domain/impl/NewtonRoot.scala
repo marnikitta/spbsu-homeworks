@@ -1,11 +1,11 @@
-package org.marnikitta.spbsu.numanalysis.oddroots.impl
+package org.marnikitta.spbsu.numanalysis.oddroots.domain.impl
 
-import org.marnikitta.spbsu.numanalysis.oddroots.{Logging, RootOnSegment, RootSearchStatistics}
+import org.marnikitta.spbsu.numanalysis.oddroots.domain.{Logging, RootOnSegment, RootSearchStatistics}
 
 /**
   * Created by marnikitta on 07.09.16.
   */
-class NewtonRoot(precision: Double) extends RootOnSegment with Logging {
+class NewtonRoot(implicit precision: Double) extends RootOnSegment with Logging {
 
   override def root(f: (Double) => Double, df: Double => Double, segment: (Double, Double)): RootSearchStatistics = {
     if (isGoodEnough(segment._1, segment._2)) {

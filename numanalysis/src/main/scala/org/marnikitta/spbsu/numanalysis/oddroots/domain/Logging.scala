@@ -1,4 +1,4 @@
-package org.marnikitta.spbsu.numanalysis.oddroots
+package org.marnikitta.spbsu.numanalysis.oddroots.domain
 
 import org.slf4j.{Logger, LoggerFactory}
 

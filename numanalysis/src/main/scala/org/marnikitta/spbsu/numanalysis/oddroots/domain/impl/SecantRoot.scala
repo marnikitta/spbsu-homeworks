@@ -1,6 +1,6 @@
-package org.marnikitta.spbsu.numanalysis.oddroots.impl
+package org.marnikitta.spbsu.numanalysis.oddroots.domain.impl
 
-import org.marnikitta.spbsu.numanalysis.oddroots.{RootOnSegment, RootSearchStatistics}
+import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootSearchStatistics}
 
 /**
   * Created by marnikitta on 11.09.16.
@@ -23,5 +23,5 @@ class SecantRoot(precision: Double) extends RootOnSegment {
     guess - f(guess) * (guess - prevGuess) / (f(guess) - f(prevGuess))
 
   private def isGoodEnough(guess: Double, prevGuess: Double): Boolean = Math.abs(guess - prevGuess) < precision
-
 }
+
