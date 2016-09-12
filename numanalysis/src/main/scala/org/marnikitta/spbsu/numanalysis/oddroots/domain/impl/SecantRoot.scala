@@ -1,15 +1,15 @@
 package org.marnikitta.spbsu.numanalysis.oddroots.domain.impl
 
-import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootSearchStatistics}
+import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootResult}
 
 /**
   * Created by marnikitta on 11.09.16.
   */
 class SecantRoot(implicit precision: Double) extends RootOnSegment {
 
-  override def root(f: (Double) => Double, df: Double => Double, segment: (Double, Double)): RootSearchStatistics = {
+  override def root(f: (Double) => Double, df: Double => Double, segment: (Double, Double)): RootResult = {
     if (isGoodEnough(segment._1, segment._2)) {
-      RootSearchStatistics(
+      RootResult(
         solution = segment._1,
         precision = precision,
         residual = Math.abs(f(segment._1)),

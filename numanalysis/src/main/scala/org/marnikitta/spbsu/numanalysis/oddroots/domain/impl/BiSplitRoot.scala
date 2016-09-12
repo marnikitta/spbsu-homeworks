@@ -1,18 +1,18 @@
 package org.marnikitta.spbsu.numanalysis.oddroots.domain.impl
 
-import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootSearchStatistics}
+import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootResult}
 
 /**
   * Created by marnikitta on 10.09.16.
   */
 class BiSplitRoot(implicit precision: Double) extends RootOnSegment {
 
-  override def root(f: (Double) => Double, df: (Double) => Double, segment: (Double, Double)): RootSearchStatistics = {
+  override def root(f: (Double) => Double, df: (Double) => Double, segment: (Double, Double)): RootResult = {
     require(segment._1 <= segment._2)
     require(f(segment._1) * f(segment._2) <= 0)
 
     if (isGoodEnough(segment)) {
-      RootSearchStatistics(
+      RootResult(
         solution = segment._1,
         precision = precision,
         residual = Math.abs(f(segment._1)),

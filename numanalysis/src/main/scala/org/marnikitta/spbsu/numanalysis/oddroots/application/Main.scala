@@ -1,7 +1,7 @@
 package org.marnikitta.spbsu.numanalysis.oddroots.application
 
 import org.marnikitta.spbsu.numanalysis.oddroots.domain.impl.{BiSplitRoot, ModifiedNewtonRoot, NewtonRoot, SecantRoot}
-import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootSearchStatistics, SegmentSearcher}
+import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootResult, SegmentSearcher}
 
 /**
   * Created by marnikitta on 11.09.16.
@@ -47,7 +47,7 @@ object Main {
     println()
   }
 
-  def printRoot(root: RootSearchStatistics): Unit = {
+  def printRoot(root: RootResult): Unit = {
     println(root.toString)
   }
 }
