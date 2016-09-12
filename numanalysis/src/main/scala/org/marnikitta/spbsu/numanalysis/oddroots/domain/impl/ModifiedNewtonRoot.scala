@@ -5,7 +5,7 @@ import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootSear
 /**
   * Created by marnikitta on 11.09.16.
   */
-class ModifiedNewtonRoot(precision: Double) extends RootOnSegment {
+class ModifiedNewtonRoot(implicit precision: Double) extends RootOnSegment {
   override def root(f: (Double) => Double, df: Double => Double, segment: (Double, Double)): RootSearchStatistics = {
     root(f, df(segment._2), segment)
   }
@@ -19,7 +19,7 @@ class ModifiedNewtonRoot(precision: Double) extends RootOnSegment {
         iterations = 1,
         lastSegment = segment)
     }
-    else root(f, df, (improve(f, df, segment._1), segment._1)).withIncreasedIteration
+    else root(f, df, (improve(f, segment._1, df), segment._1)).withIncreasedIteration
   }
 
   private def improve(f: Double => Double, guess: Double, df: Double): Double =

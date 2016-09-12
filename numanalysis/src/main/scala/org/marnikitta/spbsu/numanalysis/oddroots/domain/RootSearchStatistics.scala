@@ -12,6 +12,6 @@ case class RootSearchStatistics(solution: Double,
     RootSearchStatistics(solution, precision, residual, iterations + 1, lastSegment)
 
   override def toString: String =
-    "\nSolution is %f with precision %f \nResidual is %s. \nFinished in %d iterations"
-      .format(solution, precision, residual, iterations)
+    "Solution=%f, precision=%f, residual=%f, iterations=%d, lastSegment=%s"
+      .format(solution, precision, residual, iterations, lastSegment)
 }

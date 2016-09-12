@@ -5,7 +5,7 @@ import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootSear
 /**
   * Created by marnikitta on 10.09.16.
   */
-class BiSplitRoot(precision: Double) extends RootOnSegment {
+class BiSplitRoot(implicit precision: Double) extends RootOnSegment {
 
   override def root(f: (Double) => Double, df: (Double) => Double, segment: (Double, Double)): RootSearchStatistics = {
     require(segment._1 <= segment._2)

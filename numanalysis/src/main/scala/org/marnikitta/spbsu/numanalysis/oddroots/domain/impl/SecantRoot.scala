@@ -5,7 +5,7 @@ import org.marnikitta.spbsu.numanalysis.oddroots.domain.{RootOnSegment, RootSear
 /**
   * Created by marnikitta on 11.09.16.
   */
-class SecantRoot(precision: Double) extends RootOnSegment {
+class SecantRoot(implicit precision: Double) extends RootOnSegment {
 
   override def root(f: (Double) => Double, df: Double => Double, segment: (Double, Double)): RootSearchStatistics = {
     if (isGoodEnough(segment._1, segment._2)) {
