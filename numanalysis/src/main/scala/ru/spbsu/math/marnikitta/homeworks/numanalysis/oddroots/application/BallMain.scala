@@ -1,7 +1,7 @@
-package org.marnikitta.spbsu.numanalysis.oddroots.application
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.oddroots.application
 
-import org.marnikitta.spbsu.numanalysis.oddroots.domain.SegmentSearcher
-import org.marnikitta.spbsu.numanalysis.oddroots.domain.impl.NewtonRoot
+import ru.spbsu.math.marnikitta.homeworks.numanalysis.oddroots.domain.SegmentSearcher
+import ru.spbsu.math.marnikitta.homeworks.numanalysis.oddroots.domain.impl.NewtonRoot
 
 /**
   * Created by marnikitta on 13/09/16.

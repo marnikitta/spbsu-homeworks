@@ -1,4 +1,4 @@
-package org.marnikitta.spbsu.numanalysis.oddroots.domain
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.oddroots.domain
 
 /**
   * Created by marnikitta on 11.09.16.
