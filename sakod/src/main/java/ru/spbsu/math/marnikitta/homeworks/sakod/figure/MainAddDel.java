@@ -39,16 +39,6 @@ public class MainAddDel extends Application {
                     sh.setLayoutX(e.getX());
                     sh.setLayoutY(e.getY());
                     root.getChildren().add(sh);
-                } else {
-                    Group sh = new Serpin();
-                    sh.setOnMousePressed(e1 -> {
-                        if (e1.getButton() == MouseButton.SECONDARY) {
-                            root.getChildren().remove(sh);
-                        }
-                    });
-                    sh.setLayoutX(e.getX());
-                    sh.setLayoutY(e.getY());
-                    root.getChildren().add(sh);
                 }
             }
         });
