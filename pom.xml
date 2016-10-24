@@ -19,6 +19,7 @@
     <modules>
         <module>sakod</module>
         <module>numanalysis</module>
+        <module>test</module>
     </modules>
 
     <dependencies>
