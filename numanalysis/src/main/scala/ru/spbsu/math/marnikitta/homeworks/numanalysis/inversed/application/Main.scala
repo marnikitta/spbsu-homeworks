@@ -8,24 +8,26 @@ import ru.spbsu.math.marnikitta.homeworks.numanalysis.oddroots.domain.impl.BiSpl
   * Created by marnikitta on 24.10.16.
   */
 object Main {
-  val f: Double => Double = x => Math.exp(x) - 2
-  val a = 1d
-  val b = 30d
-  val steps = 100
-  val power = 4
+  val f: Double => Double = x => Math.sin(x) + x * x
+  val target = 1.8d
+
+  val a = 0d
+  val b = 1d
+  val steps = 10
+
+  val power = 5
   val eps = 1e-1
+
   implicit val presision = 1e-8
 
-  val target = 54
-  val expected = Math.log(54 + 2)
 
   def main(args: Array[String]): Unit = {
     val step = (b - a) / steps
-    val args = Stream.iterate(a, steps)(a => a + 1).toIndexedSeq
-    val points = args.zip(args.map(f(_)))
+    val args = Stream.iterate(a, steps + 1)(a => a + step).toIndexedSeq
+    val points = args.zip(args.map(f))
 
     println("All points:")
-    println(points)
+    points.foreach(p => println(p))
 
     println("\nTask 1\n")
     taskOne(points)
@@ -48,12 +50,11 @@ object Main {
   }
 
   def taskOne(points: Seq[(Double, Double)]): Unit = {
-    println("Nearest points:")
+//    println("Nearest points:")
     val chosen = points.sortBy(a => Math.abs(a._2 - target)).take(power + 1)
-    println(chosen)
+//    println(chosen)
 
     val qn = LagrangeInterpolator.interpolate(chosen.map(_.swap))
-    println()
     println("f^-1(target) = " + qn(target))
     println("Residual = " + Math.abs(target - f(qn(target))))
   }
