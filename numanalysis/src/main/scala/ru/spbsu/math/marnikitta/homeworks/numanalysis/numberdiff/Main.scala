@@ -34,18 +34,18 @@ object Main {
       println((line(1),
         f(line(1)),
         derevative(f, line(0), line(1), line(2), step),
-        Math.abs(df(line(0)) - derevative(f, line(0), line(1), line(2), step)),
+        Math.abs(df(line(1)) - derevative(f, line(0), line(1), line(2), step)),
         secondDerevative(f, line(0), line(1), line(2), step),
-        Math.abs(df2(line(0)) - secondDerevative(f, line(0), line(1), line(2), step))
+        Math.abs(df2(line(1)) - secondDerevative(f, line(0), line(1), line(2), step))
         ))
     )
 
     println((last.last,
       f(last.last),
       rightDerivative(f, last(0), last(1), last(2), step),
-      Math.abs(df(last(0)) - rightDerivative(f, last(0), last(1), last(2), step)),
+      Math.abs(df(last(2)) - rightDerivative(f, last(0), last(1), last(2), step)),
       rightSecondDerivative(f, last(0), last(1), last(2), step),
-      Math.abs(df2(first(0)) - rightSecondDerivative(f, last(0), last(1), last(2), step))
+      Math.abs(df2(last(2)) - rightSecondDerivative(f, last(0), last(1), last(2), step))
       ))
   }
 

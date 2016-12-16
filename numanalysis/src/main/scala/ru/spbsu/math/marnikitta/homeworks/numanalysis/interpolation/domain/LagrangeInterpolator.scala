@@ -4,7 +4,7 @@ package ru.spbsu.math.marnikitta.homeworks.numanalysis.interpolation.domain
   * Created by marnikitta on 25.09.16.
   */
 object LagrangeInterpolator extends Interpolator {
-  override def interpolate(points: Seq[(Double, Double)]): Function[Double, Double] = {
+  override def apply(points: Seq[(Double, Double)]): Function[Double, Double] = {
     val indexedSeq = points.unzip._1.toIndexedSeq
 
     points.unzip._2.toStream.zipWithIndex.map(tup => lk(indexedSeq, tup._2) andThen (_ * tup._1))

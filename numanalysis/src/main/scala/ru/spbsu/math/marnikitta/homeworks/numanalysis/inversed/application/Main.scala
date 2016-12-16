@@ -39,7 +39,7 @@ object Main {
   def taskTwo(points: Seq[(Double, Double)]): Unit = {
     val chosen = points.sortBy(a => Math.abs(a._2 - target)).take(power + 1)
 
-    val qn = LagrangeInterpolator.interpolate(chosen)
+    val qn = LagrangeInterpolator.apply(chosen)
     val rootSearcher = new BiSplitRoot()
 
     val segments = new SegmentSearcher(chosen.minBy(_._1)._1, chosen.maxBy(_._1)._1, eps).segments(x => qn(x) - target)
@@ -54,7 +54,7 @@ object Main {
     val chosen = points.sortBy(a => Math.abs(a._2 - target)).take(power + 1)
 //    println(chosen)
 
-    val qn = LagrangeInterpolator.interpolate(chosen.map(_.swap))
+    val qn = LagrangeInterpolator.apply(chosen.map(_.swap))
     println("f^-1(target) = " + qn(target))
     println("Residual = " + Math.abs(target - f(qn(target))))
   }
