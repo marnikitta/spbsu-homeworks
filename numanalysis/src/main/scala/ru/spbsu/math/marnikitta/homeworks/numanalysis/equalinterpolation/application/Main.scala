@@ -1,9 +1,9 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.interpolation_equal.application
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.equalinterpolation.application
 
 import java.util.Scanner
 
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.interpolation.domain.LagrangeInterpolator
-import ru.spbsu.math.marnikitta.homeworks.numanalysis.interpolation_equal.domain.{BeginningNewton, CenterNewton}
+import ru.spbsu.math.marnikitta.homeworks.numanalysis.equalinterpolation.domain.{BeginningNewton, CenterNewton, EndingNewton}
 
 import scala.collection.mutable.ListBuffer
 
@@ -34,6 +34,7 @@ object Main {
     val table = diffs(points.map(_._2))
 
     val beginningNewton = BeginningNewton
+    val endingNewton = EndingNewton
     val centerNewton = CenterNewton
     val realNewton = LagrangeInterpolator
 
@@ -59,10 +60,9 @@ object Main {
 
         } else if (x >= b - step) {
           println("Newton for the end of the table")
-          val func = beginningNewton(table, degree)
-          val funcTest = realNewton(points.take(degree + 1))
-          println(func((x - a) / step))
-          println(funcTest(x))
+          val func = endingNewton(table, degree)
+          print("Residual: ")
+          println(math.abs(func((x - b) / step) - f(x)))
         } else {
           println("Euler for the middle of the table")
           val position = ((x - a) / step).toInt

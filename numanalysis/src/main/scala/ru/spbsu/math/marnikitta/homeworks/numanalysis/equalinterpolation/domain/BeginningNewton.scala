@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.interpolation_equal.domain
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.equalinterpolation.domain
 
 /**
   * Created by marnikitta on 12/16/16.
