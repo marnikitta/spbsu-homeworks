@@ -14,13 +14,12 @@ object Main {
   }
 
   def test(): Unit = {
-    val a = -5d
-    val b = 5d
-    val m = 4
-    val degree = 6
+    val a = -1d
+    val b = 1d
+    val m = 8
     val target = 0
 
-    val f: (Double => Double) = x => 1 / (1 + x * x)
+    val f: (Double => Double) = x => 1 / (1 + 25 * x * x)
 
     val step = (b - a) / m
     val args = Stream.iterate(a, m + 1)(a => a + step).toIndexedSeq
@@ -34,7 +33,7 @@ object Main {
     plot(a to b by step / 1000, newton)
     hold()
 
-    val m1 = 8
+    val m1 = 10
     val step1 = (b - a) / m1
     val args1 = Stream.iterate(a, m1 + 1)(a => a + step1).toIndexedSeq
     val points1 = args1.zip(args1.map(f))

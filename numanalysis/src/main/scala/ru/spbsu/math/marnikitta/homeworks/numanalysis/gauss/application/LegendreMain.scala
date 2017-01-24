@@ -6,12 +6,16 @@ import ru.spbsu.math.marnikitta.homeworks.numanalysis.oddroots.domain.impl.BiSpl
 /**
   * Created by marnikitta on 12/18/16.
   */
-object LegandreMain {
+object LegendreMain {
   def main(args: Array[String]): Unit = {
-    val f: Double => Double = math.sin
-    val integral = 0d
+
+    val f: Double => Double = x => math.sqrt((x + 1) / 2) * math.sin((x + 1) / 2) / 2
+    val integral = 0.364222
     //    val f: Double => Double = x => math.pow(x, 5) - math.pow(x, 4) + 21 * math.pow(x, 3) - 2 * x * x + x + 2
     //    val integral = 34d/15
+
+    val k = 1d / 2
+    val b = 1d / 2
 
     val poly = polyLeg(3)
     val dPoly = dPolyLeg(3)
@@ -19,9 +23,11 @@ object LegandreMain {
     val coefs = roots.map(t => 2 / (1 - t * t) / math.pow(dPoly(t), 2))
     println("Roots: %s".format(roots))
     println("Coefs: %s".format(coefs))
+
     val quadrat = roots.map(f).zip(coefs).map(p => p._1 * p._2).foldLeft(0d)((seed, add) => seed + add)
 
     //    val quadrat = a1 * f(roots.head) + a2 * f(roots(1)) + a3 * f(roots(2))
+    println(quadrat)
     println("Residual = %.20f" format math.abs(quadrat - integral))
   }
 

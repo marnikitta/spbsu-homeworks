@@ -21,10 +21,10 @@ object GaussMain {
     val mu4 = 2d / 11
     val mu5 = 2d / 13
 
-    //    val f: Double => Double = math.sin
-    //    val integral = 0.364222
-    val f: Double => Double = x => math.pow(x, 5) - math.pow(x, 4) + 21 * math.pow(x, 3) - 2 * x * x + x + 2
-    val integral = 29032d / 5005
+    val f: Double => Double = math.sin
+    val integral = 0.364222
+    //    val f: Double => Double = x => math.pow(x, 5) - math.pow(x, 4) + 21 * math.pow(x, 3) - 2 * x * x + x + 2
+    //    val integral = 29032d / 5005
 
     val polyMatrix = DenseMatrix((mu2, mu1, mu0), (mu3, mu2, mu1), (mu4, mu3, mu2))
     val polyB = DenseVector(-mu3, -mu4, -mu5)
@@ -56,6 +56,7 @@ object GaussMain {
     println("a1 = %f, a2 = %f, a3 = %f".format(a1, a2, a3))
 
     val quadrat = a1 * f(roots.head) + a2 * f(roots(1)) + a3 * f(roots(2))
+    println(quadrat)
     println("Residual = %.20f" format math.abs(quadrat - integral))
   }
 

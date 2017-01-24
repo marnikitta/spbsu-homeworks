@@ -2,8 +2,8 @@ package ru.spbsu.math.marnikitta.homeworks.numanalysis.equalinterpolation.applic
 
 import java.util.Scanner
 
-import ru.spbsu.math.marnikitta.homeworks.numanalysis.interpolation.domain.LagrangeInterpolator
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.equalinterpolation.domain.{BeginningNewton, CenterNewton, EndingNewton}
+import ru.spbsu.math.marnikitta.homeworks.numanalysis.interpolation.domain.LagrangeInterpolator
 
 import scala.collection.mutable.ListBuffer
 
@@ -19,14 +19,13 @@ object Main {
   def test(): Unit = {
     val a = 0d
     val b = 1d
-    val m = 4
-    val degree = 7
+    val m = 10
 
-    val f: (Double => Double) = x => math.sin(x) - x * x / 2
+    val f: (Double => Double) = x => math.sin(x) + x * x / 2
 
     val sc = new Scanner(System.in)
 
-    println("Function: \n")
+    println("Function:")
     val step = (b - a) / m
     val args = Stream.iterate(a, m + 1)(a => a + step).toIndexedSeq
     val points = args.zip(args.map(f))
@@ -38,40 +37,39 @@ object Main {
     val centerNewton = CenterNewton
     val realNewton = LagrangeInterpolator
 
-    while (true) {
+    var degree = -1
+    while (degree < 0 || degree > m) {
+      println("Degree should be in [%d, %d]".format(1, m))
+      print("Degree: ")
+      degree = sc.nextInt()
+    }
 
-      print("\nTarget point: ")
+
+    val centerLeft = a + ((degree + 1) / 2) * step
+    val centerRight = b - ((degree + 1) / 2) * step
+    println("Target point should be in [%f, %f], [%f, %f] or [%f, %f]"
+      .format(a, a + step, centerLeft, centerRight, b - step, b))
+
+
+    while (true) {
+      print("Target point: ")
       val x = sc.nextDouble()
 
-      if (x < a || x > b) {
-        println("Out of bounds!")
+      if (x <= a + step && x >= a) {
+        println("Newton for the beginning of the table")
+        val func = beginningNewton(table, degree)
+        println("Residual: %.20f".format(math.abs(func((x - a) / step) - f(x))))
+      } else if (x >= b - step && x <= b) {
+        println("Newton for the end of the table")
+        val func = endingNewton(table, degree)
+        println("Residual: %.20f".format(math.abs(func((x - b) / step) - f(x))))
+      } else if (x >= centerLeft && x <= centerRight) {
+        println("Euler for the middle of the table")
+        val position = ((x - a) / step).toInt
+        val func = centerNewton(position, table, degree)
+        println("Residual: %.20f".format(math.abs(func((x - (a + step * position)) / step) - f(x))))
       } else {
-        print("Degree: ")
-        val degree = sc.nextInt()
-
-        if (degree >= points.size) {
-          println("Degree is greater than available points")
-        } else if (x <= a + step) {
-          println("Newton for the beginning of the table")
-          val func = beginningNewton(table, degree)
-
-          print("Residual: ")
-          println(math.abs(func((x - a) / step) - f(x)))
-
-        } else if (x >= b - step) {
-          println("Newton for the end of the table")
-          val func = endingNewton(table, degree)
-          print("Residual: ")
-          println(math.abs(func((x - b) / step) - f(x)))
-        } else {
-          println("Euler for the middle of the table")
-          val position = ((x - a) / step).toInt
-
-          val func = centerNewton(position, table, degree)
-
-          print("Residual: ")
-          println(math.abs(func((x - (a + step * position)) / step) - f(x)))
-        }
+        println("Point is out of bounds!")
       }
     }
   }
