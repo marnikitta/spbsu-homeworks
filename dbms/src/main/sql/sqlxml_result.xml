@@ -1,0 +1,124 @@
+<customer id="3" name="Edward" lastname="Logan" city="East Boston" state="MA">
+    <orders>
+        <order id="6" total="1515" timestamp="08-SEP-16 07.28.04.000000 AM">
+            <item price="150" quantity="3">
+                <product>
+                    <name>Jacket</name>
+                    <description>Fully lined jacket which is both professional and extremely comfortable to wear
+                    </description>
+                    <category>Mens</category>
+                    <avail>Y</avail>
+                    <list_price>150</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+            <item price="120" quantity="3">
+                <product>
+                    <name>Ladies Shoes</name>
+                    <description>Low heel and cushioned interior for comfort and style in simple yet elegant shoes
+                    </description>
+                    <category>Womens</category>
+                    <avail>Y</avail>
+                    <list_price>120</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+            <item price="125" quantity="3">
+                <product>
+                    <name>Bag</name>
+                    <description>Unisex bag suitable for carrying laptops with room for many additional items
+                    </description>
+                    <category>Accessories</category>
+                    <avail>Y</avail>
+                    <list_price>125</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+            <item price="110" quantity="3">
+                <product>
+                    <name>Mens Shoes</name>
+                    <description>Leather upper and lower lace up shoes</description>
+                    <category>Mens</category>
+                    <avail>Y</avail>
+                    <list_price>110</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+        </order>
+        <order id="7" total="905" timestamp="13-SEP-16 07.28.04.000000 AM">
+            <item price="50" quantity="2">
+                <product>
+                    <name>Business Shirt</name>
+                    <description>Wrinkle-free cotton business shirt</description>
+                    <category>Mens</category>
+                    <avail>Y</avail>
+                    <list_price>50</list_price>
+                    <tags>TOP SELLER</tags>
+                </product>
+            </item>
+            <item price="80" quantity="2">
+                <product>
+                    <name>Trousers</name>
+                    <description>Black trousers suitable for every business man</description>
+                    <category>Mens</category>
+                    <avail>Y</avail>
+                    <list_price>80</list_price>
+                    <tags>TOP SELLER</tags>
+                </product>
+            </item>
+            <item price="60" quantity="2">
+                <product>
+                    <name>Blouse</name>
+                    <description>Silk blouse ideal for all business women</description>
+                    <category>Womens</category>
+                    <avail>Y</avail>
+                    <list_price>60</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+            <item price="80" quantity="2">
+                <product>
+                    <name>Skirt</name>
+                    <description>Wrinkle free skirt</description>
+                    <category>Womens</category>
+                    <avail>Y</avail>
+                    <list_price>80</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+            <item price="30" quantity="3">
+                <product>
+                    <name>Belt</name>
+                    <description>Leather belt</description>
+                    <category>Accessories</category>
+                    <avail>Y</avail>
+                    <list_price>30</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+            <item price="125" quantity="1">
+                <product>
+                    <name>Bag</name>
+                    <description>Unisex bag suitable for carrying laptops with room for many additional items
+                    </description>
+                    <category>Accessories</category>
+                    <avail>Y</avail>
+                    <list_price>125</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+            <item price="50" quantity="3">
+                <product>
+                    <name>Wallet</name>
+                    <description>Travel wallet suitable for men and women. Several compartments for credit cards,
+                        passports and cash
+                    </description>
+                    <category>Accessories</category>
+                    <avail>Y</avail>
+                    <list_price>50</list_price>
+                    <tags></tags>
+                </product>
+            </item>
+        </order>
+    </orders>
+</customer>

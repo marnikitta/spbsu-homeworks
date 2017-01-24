@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="faculty">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="department" type="department" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="department">
+        <xs:sequence>
+            <xs:element name="students">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="student" type="student" maxOccurs="unbounded" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="head" type="xs:string"/>
+        <xs:attribute name="foundation" type="xs:date"/>
+    </xs:complexType>
+
+    <xs:complexType name="student">
+        <xs:sequence>
+            <xs:element name="courses">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="course" type="course" maxOccurs="unbounded" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="lastname" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="course">
+        <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="lecturer" type="xs:string"/>
+        <xs:attribute name="mark" type="xs:integer"/>
+    </xs:complexType>
+</xs:schema>
