@@ -32,5 +32,11 @@ hs_err_pid*
 
 /.idea
 
-/*.iml
+*.iml
+*.html
+
+**/target
+/target
 # Created by .ignore support plugin (hsz.mobi)
+
+

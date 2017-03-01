@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.spbsu.math.marnikitta</groupId>
-    <artifactId>homeworks-parent</artifactId>
+    <artifactId>homeworks</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
@@ -20,6 +20,7 @@
         <module>sakod</module>
         <module>numanalysis</module>
         <module>dbms</module>
+        <module>ms</module>
     </modules>
 
     <dependencies>
