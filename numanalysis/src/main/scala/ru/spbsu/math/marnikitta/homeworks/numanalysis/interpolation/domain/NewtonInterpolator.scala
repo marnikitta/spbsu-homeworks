@@ -6,7 +6,7 @@ import scala.collection.mutable.ListBuffer
   * Created by marnikitta on 12/15/16.
   */
 object NewtonInterpolator extends Interpolator {
-  override def apply(points: Seq[(Double, Double)]): Function[Double, Double] = {
+  override def apply(points: Seq[(Double, Double)]): Double => Double = {
     val diffs = dividedDiff(points)
     val m = multies(points.map(_._1))
     assert(m.head(122) == 1)
