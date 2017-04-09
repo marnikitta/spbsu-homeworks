@@ -173,48 +173,6 @@ public class Matrix {
     return this.height;
   }
 
-  public Matrix inverse() {
-    if (width() != height()) {
-      throw new IllegalArgumentException("Matrix should be square");
-    }
-    final int length = width();
-    final double[][] a = array();
-    final double[][] result = Matrix.ones(length).array();
-
-    for (int i = length - 1; i > 0; --i) {
-      if (a[i - 1][0] < a[i][0]) {
-        for (int j = 0; j < length; ++j) {
-          final double temp1 = a[i][j];
-          a[i][j] = a[i - 1][j];
-          a[i - 1][j] = temp1;
-
-          final double temp2 = result[i][j];
-          result[i][j] = result[i - 1][j];
-          result[i - 1][j] = temp2;
-        }
-      }
-    }
-
-    for (int i = 0; i < length; ++i) {
-      for (int j = 0; j < length; ++j) {
-        if (j != i) {
-          final double coef = a[j][i] / a[i][i];
-          for (int k = 0; k < length; k++) {
-            a[j][k] -= a[i][k] * coef;
-            result[j][k] -= result[i][k] * coef;
-          }
-        }
-      }
-    }
-
-    for (int i = 0; i < length; ++i) {
-      final double coef = a[i][i];
-      for (int j = 0; j < length; ++j) {
-        result[i][j] = result[i][j] / coef;
-      }
-    }
-    return new Matrix(result);
-  }
 
   public double[] row(final int i) {
     final double[] result = new double[width()];
@@ -230,17 +188,17 @@ public class Matrix {
     return result;
   }
 
-  public static Matrix concat(final Matrix a, final Matrix b) {
-    if (a.height() != b.height()) {
+  public Matrix concat(final Matrix that) {
+    if (this.height() != that.height()) {
       throw new IllegalArgumentException("Heights should be equal");
     }
-    final double[][] result = new double[a.height()][a.width() + b.width()];
-    for (int i = 0; i < a.height(); ++i) {
-      for (int j = 0; j < a.width() + b.width(); ++j) {
-        if (j < a.width()) {
-          result[i][j] = a.get(i, j);
+    final double[][] result = new double[this.height()][this.width() + that.width()];
+    for (int i = 0; i < this.height(); ++i) {
+      for (int j = 0; j < this.width() + that.width(); ++j) {
+        if (j < this.width()) {
+          result[i][j] = this.get(i, j);
         } else {
-          result[i][j] = b.get(i, j - a.width());
+          result[i][j] = that.get(i, j - this.width());
         }
       }
     }
@@ -259,6 +217,41 @@ public class Matrix {
       }
     }
     return result;
+  }
+
+  public double det() {
+    if (width() != height()) {
+      throw new IllegalArgumentException();
+    }
+
+    return det(matrix, width());
+  }
+
+  private static double det(final double[][] A, final int N) {
+    if (N == 1) {
+      return A[0][0];
+    } else if (N == 2) {
+      return A[0][0] * A[1][1] - A[1][0] * A[0][1];
+    } else {
+      double det = 0;
+      for (int j1 = 0; j1 < N; j1++) {
+        final double[][] m = new double[N - 1][];
+        for (int k = 0; k < (N - 1); k++) {
+          m[k] = new double[N - 1];
+        }
+        for (int i = 1; i < N; i++) {
+          int j2 = 0;
+          for (int j = 0; j < N; j++) {
+            if (j == j1)
+              continue;
+            m[i - 1][j2] = A[i][j];
+            j2++;
+          }
+        }
+        det += Math.pow(-1.0, 1.0 + j1 + 1.0) * A[0][j1] * det(m, N - 1);
+      }
+      return det;
+    }
   }
 
   @Override
@@ -282,26 +275,26 @@ public class Matrix {
     return result;
   }
 
-  @Override
-  public String toString() {
-    return "Matrix{" + "matrix=" + (matrix == null ? "null" : Arrays.deepToString(matrix)) +
-            '}';
-  }
-
-  public String niceToString() {
+  public static String niceToString(final double[][] array) {
     final StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < height(); ++i) {
-      for (int j = 0; j < width(); ++j) {
-        sb.append(get(i, j));
-        if (j != width() - 1) {
+    for (int i = 0; i < array.length; ++i) {
+      for (int j = 0; j < array[i].length; ++j) {
+        sb.append(array[i][j]);
+        if (j != array[i].length - 1) {
           sb.append(" ");
         }
       }
-      if (i != height() - 1) {
+      if (i != array.length - 1) {
         sb.append("\n");
       }
     }
     return sb.toString();
+
+  }
+
+
+  public String niceToString() {
+    return niceToString(this.matrix);
   }
 }
 
