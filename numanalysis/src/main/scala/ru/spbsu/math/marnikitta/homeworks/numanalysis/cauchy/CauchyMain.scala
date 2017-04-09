@@ -33,7 +33,7 @@ object CauchyMain {
     println()
 
     val adamsSeq = (3 to N).map(k => x0 + k * h)
-    val adamsResult = NewtonInterpolator(seq.zip(seq.map(taylorResult)))
+    val adamsResult = NewtonInterpolator(taylorSeq.zip(taylorSeq.map(taylorResult)))
     println("Adams result:")
     println(adamsSeq.map(adamsResult))
     println("Adams residuals:")
@@ -41,12 +41,54 @@ object CauchyMain {
 
     println()
 
-    val rungeSeq = (1 to N).map(k => x0 + k * h)
+    val rungeSeq = (0 to N).map(k => x0 + k * h)
     val rungeResult = runge(rungeSeq)
     println("Runge result:")
     println(rungeResult)
     println("Runge residuals:")
     println(rungeSeq.map(exactResult).zip(rungeResult).map { case (a, b) => Math.abs(a - b) })
+
+    println()
+
+    val eulerSeq = (0 to N).map(k => x0 + k * h)
+    val eulerResult = euler(eulerSeq)
+    println("Euler result:")
+    println(eulerResult)
+    println("Euler residuals:")
+    println(eulerSeq.map(exactResult).zip(eulerResult).map { case (a, b) => Math.abs(a - b) })
+
+    println()
+
+    val betterEulerResult = betterEuler(eulerSeq)
+    println("Better Euler result:")
+    println(betterEulerResult)
+    println("Better Euler residuals:")
+    println(eulerSeq.map(exactResult).zip(betterEulerResult).map { case (a, b) => Math.abs(a - b) })
+  }
+
+  def betterEuler(xWithX0: Seq[Double]): Seq[Double] = {
+    val res: ListBuffer[Double] = ListBuffer()
+    var xn: Double = x0
+    var yn: Double = y0
+    res += yn
+    for (xn <- xWithX0) {
+      yn = yn + h * f(xn + h / 2, yn + h / 2 * f(xn, yn))
+      res += yn
+    }
+    res
+  }
+
+
+  def euler(xWithX0: Seq[Double]): Seq[Double] = {
+    val res: ListBuffer[Double] = ListBuffer()
+    var xn: Double = x0
+    var yn: Double = y0
+    res += yn
+    for (xn <- xWithX0) {
+      yn = yn + h * f(xn, yn)
+      res += yn
+    }
+    res
   }
 
   lazy val taylorResult: Double => Double = {
@@ -66,11 +108,12 @@ object CauchyMain {
         + ddddy * Math.pow(x - x0, 5) / 120)
   }
 
-  def runge(xWithoutX0: Seq[Double]): Seq[Double] = {
+  def runge(xWithX0: Seq[Double]): Seq[Double] = {
     val res: ListBuffer[Double] = ListBuffer()
     var xn: Double = x0
     var yn: Double = y0
-    for (xn <-  xWithoutX0) {
+    res += yn
+    for (xn <- xWithX0) {
       yn = rungeStep(xn, yn)
       res += yn
     }
@@ -82,6 +125,7 @@ object CauchyMain {
     val k2 = h * f(xn + h / 2, yn + k1 / 2)
     val k3 = h * f(xn + h / 2, yn + k2 / 2)
     val k4 = h * f(xn + h, yn + k3)
-    yn + 1 / 6 * (k1 + 2 * k2 + 2 * k3 + k4)
+    val result = yn + 1d / 6 * (k1 + 2 * k2 + 2 * k3 + k4)
+    result
   }
 }
