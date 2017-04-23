@@ -2,37 +2,22 @@ package ru.spbsu.math.marnikitta.homeworks.numanalysis.gauss;
 
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
-public final class Solver {
-  private final static double EPS = 1e-6;
+@SuppressWarnings({"UseOfSystemOutOrSystemErr", "OverlyLongMethod"})
+public final class GaussSolver {
+  private final double eps;
 
-  private Solver() {
+  public GaussSolver(final double eps) {
+    this.eps = eps;
   }
 
-  public static Matrix inverseSimpleGauss(final Matrix matrix) {
-    if (matrix.width() != matrix.height()) {
-      throw new IllegalArgumentException("Matrix should be square");
-    }
-    final double[][] a = matrix.concat(Matrix.ones(matrix.width())).array();
-    simpleGauss(a);
-
-    final double[][] result = new double[matrix.height()][matrix.width()];
-    for (int i = 0; i < matrix.height(); ++i) {
-      for (int j = 0; j < matrix.width(); ++j) {
-        result[i][j] = a[i][matrix.width() + j];
-      }
-    }
-
-    return new Matrix(result);
-  }
-
-  private static void simpleGauss(final double[][] a) {
+  private void simpleGauss(final double[][] a) {
     final int width = a.length;
     final int sumWidth = a[0].length;
     final int height = a.length;
 
     for (int k = 0; k < height; ++k) {
       final double mainElement = a[k][k];
-      if (Math.abs(mainElement) < EPS) {
+      if (Math.abs(mainElement) < this.eps) {
         System.out.println("Main element is lower then Eps");
       }
 
@@ -50,9 +35,9 @@ public final class Solver {
     }
 
 
-    System.out.println("Gauss forward run result:");
-    System.out.println(Matrix.niceToString(a));
-    System.out.flush();
+    //System.out.println("Gauss forward run result:");
+    //System.out.println(Matrix.niceToString(a));
+    //System.out.flush();
 
     for (int k = height - 1; k >= 0; --k) {
       for (int i = k - 1; i >= 0; --i) {
@@ -63,13 +48,13 @@ public final class Solver {
       }
     }
 
-    System.out.println("Gauss backward run result:");
-    System.out.println(Matrix.niceToString(a));
-    System.out.flush();
+    //System.out.println("Gauss backward run result:");
+    //System.out.println(Matrix.niceToString(a));
+    //System.out.flush();
   }
 
 
-  public static Matrix inverseColumnwiseGauss(final Matrix matrix) {
+  public Matrix inverseColumnwiseGauss(final Matrix matrix) {
     if (matrix.width() != matrix.height()) {
       throw new IllegalArgumentException("Matrix should be square");
     }
@@ -92,14 +77,12 @@ public final class Solver {
         }
       }
 
-      {
-        final int tmp = columnSwaps[k];
-        columnSwaps[k] = columnSwaps[maxCol];
-        columnSwaps[maxCol] = tmp;
-      }
+      final int tmp = columnSwaps[k];
+      columnSwaps[k] = columnSwaps[maxCol];
+      columnSwaps[maxCol] = tmp;
 
       final double mainElement = a[k][columnSwaps[k]];
-      if (Math.abs(mainElement) < EPS) {
+      if (Math.abs(mainElement) < this.eps) {
         System.out.println("Main element is lower then Eps");
       }
 
@@ -123,9 +106,9 @@ public final class Solver {
     }
 
 
-    System.out.println("Gauss forward run result:");
-    System.out.println(Matrix.niceToString(a));
-    System.out.flush();
+    //System.out.println("Gauss forward run result:");
+    //System.out.println(GaussSolver.onlyAReorder(a, columnSwaps));
+    //System.out.flush();
 
     for (int k = height - 1; k >= 0; --k) {
       for (int i = k - 1; i >= 0; --i) {
@@ -136,10 +119,6 @@ public final class Solver {
       }
     }
 
-    System.out.println("Gauss backward run result:");
-    System.out.println(Matrix.niceToString(a));
-    System.out.flush();
-
     final double[][] result = new double[matrix.height()][matrix.width()];
     for (int i = 0; i < matrix.height(); ++i) {
       System.arraycopy(a[i], width, result[columnSwaps[i]], 0, matrix.width());
@@ -147,12 +126,12 @@ public final class Solver {
     return new Matrix(result);
   }
 
-  public static Matrix solveColumnwiseGauss(final Matrix A, final Matrix b) {
+  public Matrix solveColumnwiseGauss(final Matrix A, final Matrix b) {
     if (A.width() != A.height()) {
       throw new IllegalArgumentException("Matrix should be square");
     }
     if (b.width() != 1) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("The width of the b should be equal to 1");
     }
     final double[][] a = A.array();
     final double[] leftSide = b.column(0);
@@ -173,14 +152,12 @@ public final class Solver {
         }
       }
 
-      {
-        final int tmp = columnSwaps[k];
-        columnSwaps[k] = columnSwaps[maxCol];
-        columnSwaps[maxCol] = tmp;
-      }
+      final int tmp = columnSwaps[k];
+      columnSwaps[k] = columnSwaps[maxCol];
+      columnSwaps[maxCol] = tmp;
 
       final double mainElement = a[k][columnSwaps[k]];
-      if (Math.abs(mainElement) < EPS) {
+      if (Math.abs(mainElement) < this.eps) {
         System.out.println("Main element is lower then Eps");
       }
 
@@ -200,19 +177,14 @@ public final class Solver {
     }
 
 
-    System.out.println("Gauss forward run result:");
-    System.out.println(Matrix.niceToString(a));
-    System.out.flush();
+    //System.out.println("Gauss forward run result:");
+    //System.out.println(GaussSolver.onlyAReorder(a, columnSwaps));
 
     for (int k = height - 1; k >= 0; --k) {
       for (int i = k - 1; i >= 0; --i) {
         leftSide[i] -= leftSide[k] * a[i][columnSwaps[k]];
       }
     }
-
-    System.out.println("Gauss backward run result:");
-    System.out.println(Matrix.niceToString(a));
-    System.out.flush();
 
     final double[][] result = new double[A.height()][1];
     for (int i = 0; i < A.height(); ++i) {
@@ -221,15 +193,15 @@ public final class Solver {
     return new Matrix(result);
   }
 
-  public static Matrix solveSimpleGauss(final Matrix A, final Matrix b) {
+  public Matrix solveSimpleGauss(final Matrix A, final Matrix b) {
     if (A.width() != A.height()) {
       throw new IllegalArgumentException("Matrix should be square");
     }
     if (b.width() != 1) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Width of 'b' should be equal to 1");
     }
     final double[][] a = A.concat(b).array();
-    simpleGauss(a);
+    this.simpleGauss(a);
 
     final double[][] result = new double[A.height()][1];
     for (int i = 0; i < A.height(); ++i) {
@@ -239,4 +211,20 @@ public final class Solver {
     return new Matrix(result);
   }
 
+  public static String onlyAReorder(final double[][] array, final int[] reorder) {
+    final StringBuilder sb = new StringBuilder(array.length * reorder.length);
+    for (int i = 0; i < array.length; ++i) {
+      for (int j = 0; j < reorder.length; ++j) {
+        sb.append(array[i][reorder[j]]);
+        if (j != array[i].length - 1) {
+          sb.append(' ');
+        }
+      }
+      if (i != array.length - 1) {
+        sb.append('\n');
+      }
+    }
+    return sb.toString();
+
+  }
 }

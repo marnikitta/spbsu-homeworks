@@ -33,7 +33,7 @@ object CauchyMain {
     println()
 
     val adamsSeq = (3 to N).map(k => x0 + k * h)
-    val adamsResult = NewtonInterpolator(taylorSeq.zip(taylorSeq.map(taylorResult)))
+    val adamsResult = NewtonInterpolator(taylorSeq.zip(taylorSeq.map(exactResult)))
     println("Adams result:")
     println(adamsSeq.map(adamsResult))
     println("Adams residuals:")
@@ -64,6 +64,44 @@ object CauchyMain {
     println(betterEulerResult)
     println("Better Euler residuals:")
     println(eulerSeq.map(exactResult).zip(betterEulerResult).map { case (a, b) => Math.abs(a - b) })
+
+    println()
+
+    val eulerCauchyResult = eulerCauchy(eulerSeq)
+    println("Euler Cauchy result:")
+    println(eulerCauchyResult)
+    println("Euler Caucy residuals:")
+    println(eulerSeq.map(exactResult).zip(eulerCauchyResult).map { case (a, b) => Math.abs(a - b) })
+
+    println()
+
+    println("Residual in last point residual:")
+    val lastX = x0 + h * N
+    val realLastY = exactResult(lastX)
+    println("Adam residual:")
+    println(Math.abs(realLastY - adamsResult(lastX)))
+    println("Runge residual:")
+    println(Math.abs(realLastY - rungeResult.last))
+    println("Euler residual:")
+    println(Math.abs(realLastY - eulerResult.last))
+    println("Better euler residual:")
+    println(Math.abs(realLastY - betterEulerResult.last))
+    println("Euler cauchy residual:")
+    println(Math.abs(realLastY - eulerCauchyResult.last))
+  }
+
+  def eulerCauchy(xWithX0: Seq[Double]): Seq[Double] = {
+    val res: ListBuffer[Double] = ListBuffer()
+    var xn: Double = x0
+    var yn: Double = y0
+    res += yn
+    for (xn <- xWithX0) {
+      val k1 = f(xn, yn)
+      val k2 = f(xn + h, yn + h * k1 * k1)
+      yn = yn + h * (k1 + k1) / 2
+      res += yn
+    }
+    res
   }
 
   def betterEuler(xWithX0: Seq[Double]): Seq[Double] = {
@@ -127,5 +165,29 @@ object CauchyMain {
     val k4 = h * f(xn + h, yn + k3)
     val result = yn + 1d / 6 * (k1 + 2 * k2 + 2 * k3 + k4)
     result
+  }
+
+  def dividedDiff(points: Seq[(Double, Double)]): Seq[Double] = {
+    val table: ListBuffer[Seq[((Double, Double), Double)]] = ListBuffer()
+    table += points.map(p => ((p._1, p._1), p._2))
+
+    if (points.size >= 2) {
+      table += points.sliding(2).map((pair: Seq[(Double, Double)]) => {
+        assert(pair.size == 2)
+        val left = pair.head
+        val right = pair.last
+        ((left._1, right._1), (left._2 - right._2) / (left._1 - right._1))
+      }).toIndexedSeq
+    }
+
+    while (table.last.size != 1) {
+      table += table.last.sliding(2).map((pair: Seq[((Double, Double), Double)]) => {
+        assert(pair.size == 2)
+        val left = pair.head
+        val right = pair.last
+        ((left._1._1, right._1._2), (left._2 - right._2) / (left._1._1 - right._1._2))
+      }).toSeq
+    }
+    table.map(line => line.head._2)
   }
 }

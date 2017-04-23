@@ -1,10 +1,12 @@
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
-/**
- * Created by marnikitta on 12/17/16.
- */
-public class OnePointOneMain {
-  public static void main(String[] args) throws InterruptedException {
+@SuppressWarnings("UseOfSystemOutOrSystemErr")
+public final class OnePointOneMain {
+  public static void main(final String[] args) {
+    new OnePointOneMain().run();
+  }
+
+  public void run() {
     final Matrix A = new Matrix(new double[][]{{1.00, 0.99}, {0.99, 0.98}});
     System.out.println("Матрица A:");
     System.out.println(A.niceToString());
@@ -46,5 +48,11 @@ public class OnePointOneMain {
     System.out.println("Число обусловленности матрицы A:");
     System.out.println(muA);
     System.out.println();
+
+    final double muAl1 = A.matrixOneNorm() * AInverse.matrixOneNorm();
+    System.out.println("Число обусловленности матрицы A l1:");
+    System.out.println(muAl1);
+    System.out.println();
+
   }
 }
