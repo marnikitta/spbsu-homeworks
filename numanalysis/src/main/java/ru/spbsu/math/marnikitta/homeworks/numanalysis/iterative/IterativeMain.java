@@ -4,17 +4,17 @@ import ru.spbsu.math.marnikitta.homeworks.numanalysis.gauss.GaussSolver;
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
-public final class IterativeApplication {
+public final class IterativeMain {
 
   public static void main(final String... args) {
-    new IterativeApplication().run();
+    new IterativeMain().run();
   }
 
   public void run() {
     final Matrix A = new Matrix(new double[][]{
-            {6.5176, 8.0648E-01, 2.23528},
+            {6.5176, 1.9176, 2.23528},
             {1.9176, -4.80648, 1.46528},
-            {0.87176, 0.69352, 4.91528}});
+            {2.23528, 1.46528, 4.91528}});
 
     final Matrix b = new Matrix(new double[][]{{3.61628}, {1.52097}, {1.81150}});
 
@@ -57,5 +57,12 @@ public final class IterativeApplication {
             "%s\n\n" +
             "## l^inf норма невязки:\n" +
             "%s\n\n", seidSolution.niceToString(), A.dot(seidSolution).subtract(b).vectorInfNorm());
+
+    final UpperRelaxation upperRelaxation = new UpperRelaxation(1.0e-3, 1);
+    final Matrix upperResult = upperRelaxation.solve(H, g);
+    System.out.printf("# Решение методом Верхней релаксации:\n" +
+            "%s\n\n" +
+            "## l^inf норма невязки:\n" +
+            "%s\n\n", upperResult.niceToString(), A.dot(upperResult).subtract(b).vectorInfNorm());
   }
 }

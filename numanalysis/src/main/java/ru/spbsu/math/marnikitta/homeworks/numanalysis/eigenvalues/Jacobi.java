@@ -1,0 +1,75 @@
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.eigenvalues;
+
+import org.jooq.lambda.tuple.Tuple2;
+import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
+
+@SuppressWarnings("OverlyComplexBooleanExpression")
+public final class Jacobi {
+  private final double eps;
+
+  public Jacobi(final double eps) {
+    this.eps = eps;
+  }
+
+  public Tuple2<Matrix, Matrix> eigen(final Matrix A) {
+    Matrix Ak = A;
+    Matrix X = Matrix.ones(A.width());
+
+    double maxUpper = -1;
+
+    int ik = -1;
+    int jk = -1;
+    for (int i = 0; i < Ak.height(); ++i) {
+      for (int j = i + 1; j < Ak.width(); ++j) {
+        if (Math.abs(Ak.get(i, j)) > maxUpper) {
+          maxUpper = Math.abs(Ak.get(i, j));
+          ik = i;
+          jk = j;
+        }
+      }
+    }
+
+
+    while (maxUpper > this.eps) {
+      final Matrix Vk = Jacobi.Vk(Ak, ik, jk);
+      Ak = Vk.transposed().dot(Ak).dot(Vk);
+      X = X.dot(Vk);
+
+      maxUpper = -1;
+      ik = -1;
+      jk = -1;
+      for (int i = 0; i < Ak.height(); ++i) {
+        for (int j = i + 1; j < Ak.width(); ++j) {
+          if (Math.abs(Ak.get(i, j)) > maxUpper) {
+            maxUpper = Math.abs(Ak.get(i, j));
+            ik = i;
+            jk = j;
+          }
+        }
+      }
+    }
+
+    return new Tuple2<>(Ak, X);
+  }
+
+  private static Matrix Vk(final Matrix a, final int ik, final int jk) {
+    final double d = Math.sqrt(StrictMath.pow(a.get(ik, ik) - a.get(jk, jk), 2) + 4 * a.get(ik, jk) * a.get(ik, jk));
+    final double c = Math.sqrt(0.5 * (1 + Math.abs(a.get(ik, ik) - a.get(jk, jk)) / d));
+    final double s = Math.signum(a.get(ik, jk) * (a.get(ik, ik) - a.get(jk, jk)))
+            * Math.sqrt(0.5 * (1 - Math.abs(a.get(ik, ik) - a.get(jk, jk)) / d));
+
+
+    final double[][] V = new double[a.height()][a.width()];
+
+    for (int i = 0; i < V.length; ++i) {
+      V[i][i] = 1;
+    }
+
+    V[ik][jk] = -s;
+    V[jk][ik] = s;
+    V[ik][ik] = c;
+    V[jk][jk] = c;
+
+    return new Matrix(V);
+  }
+}

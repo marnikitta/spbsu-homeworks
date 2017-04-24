@@ -79,6 +79,14 @@ public final class Matrix {
     return StrictMath.pow(result, 1.0d / p);
   }
 
+  public double trace() {
+    double result = 0;
+    for (int i = 0; i < Math.min(this.width, this.height); ++i) {
+      result += this.matrix[i][i];
+    }
+    return result;
+  }
+
   public double vectorInfNorm() {
     double result = -1;
     for (int i = 0; i < this.height(); ++i) {
@@ -126,7 +134,9 @@ public final class Matrix {
   public Matrix multiply(final double arg) {
     final double[][] result = new double[this.height][this.width];
     for (int i = 0; i < this.height; ++i) {
-      System.arraycopy(this.matrix[i], 0, result[i], 0, this.width);
+      for (int j = 0; j < this.width; ++j) {
+        result[i][j] = this.matrix[i][j] * arg;
+      }
     }
     return new Matrix(result);
   }
