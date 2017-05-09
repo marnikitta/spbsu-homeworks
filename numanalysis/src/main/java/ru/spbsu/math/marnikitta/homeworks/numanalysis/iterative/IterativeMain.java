@@ -12,11 +12,11 @@ public final class IterativeMain {
 
   public void run() {
     final Matrix A = new Matrix(new double[][]{
-            {6.5176, 1.9176, 2.23528},
-            {1.9176, -4.80648, 1.46528},
-            {2.23528, 1.46528, 4.91528}});
+            {10, 0.5, 0.2},
+            {0.5, 12, 0.4},
+            {0.2, 0.4, 11}});
 
-    final Matrix b = new Matrix(new double[][]{{3.61628}, {1.52097}, {1.81150}});
+    final Matrix b = new Matrix(new double[][]{{3}, {1}, {2}});
 
     final GaussSolver solver = new GaussSolver(1.0e-6);
 
@@ -44,21 +44,21 @@ public final class IterativeMain {
     System.out.printf("## l^inf норма матрицы H:\n" +
             "%s\n\n", H.matrixInfNorm());
 
-    final SimpleIteration simpleIteration = new SimpleIteration(1.0e-3);
+    final SimpleIteration simpleIteration = new SimpleIteration(1.0e-10);
     final Matrix simpleIterationSolution = simpleIteration.solve(H, g);
     System.out.printf("# Решение методом простой итерации:\n" +
             "%s\n\n" +
             "## l^inf норма невязки:\n" +
             "%s\n\n", simpleIterationSolution.niceToString(), A.dot(simpleIterationSolution).subtract(b).vectorInfNorm());
 
-    final SeidIterations seidIterations = new SeidIterations(1.0e-3);
+    final SeidIterations seidIterations = new SeidIterations(1.0e-10);
     final Matrix seidSolution = seidIterations.solve(H, g);
     System.out.printf("# Решение методом Зейделя:\n" +
             "%s\n\n" +
             "## l^inf норма невязки:\n" +
             "%s\n\n", seidSolution.niceToString(), A.dot(seidSolution).subtract(b).vectorInfNorm());
 
-    final UpperRelaxation upperRelaxation = new UpperRelaxation(1.0e-3, 1);
+    final UpperRelaxation upperRelaxation = new UpperRelaxation(1.0e-10, 0.9);
     final Matrix upperResult = upperRelaxation.solve(H, g);
     System.out.printf("# Решение методом Верхней релаксации:\n" +
             "%s\n\n" +

@@ -3,7 +3,7 @@ package ru.spbsu.math.marnikitta.homeworks.numanalysis.eigenvalues;
 import org.jooq.lambda.tuple.Tuple2;
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
-@SuppressWarnings("OverlyComplexBooleanExpression")
+@SuppressWarnings({"OverlyComplexBooleanExpression", "UseOfSystemOutOrSystemErr"})
 public final class Jacobi {
   private final double eps;
 
@@ -30,10 +30,12 @@ public final class Jacobi {
     }
 
 
+    int iter = 0;
     while (maxUpper > this.eps) {
       final Matrix Vk = Jacobi.Vk(Ak, ik, jk);
       Ak = Vk.transposed().dot(Ak).dot(Vk);
       X = X.dot(Vk);
+      iter += 1;
 
       maxUpper = -1;
       ik = -1;
@@ -48,6 +50,8 @@ public final class Jacobi {
         }
       }
     }
+
+    System.out.println(">> Jacobi iterations: " + iter);
 
     return new Tuple2<>(Ak, X);
   }

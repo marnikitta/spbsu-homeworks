@@ -38,8 +38,8 @@ public final class SeidIterations {
         }
 
         xNew[i] += g.get(i, 0);
-        iter += 1;
       }
+      iter += 1;
     } while (SeidIterations.vectorInf(xNew, xOld) > this.eps);
 
     System.out.println(">> SeidIterations: iterations: " + iter);

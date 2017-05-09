@@ -41,8 +41,8 @@ public final class UpperRelaxation {
         }
 
         xNew[i] =  xOld[i] + this.q * (tempI - xOld[i] + g.get(i, 0));
-        iter += 1;
       }
+      iter += 1;
     } while (UpperRelaxation.vectorInf(xNew, xOld) > this.eps);
 
     System.out.println(">> UpperRelaxation: iterations: " + iter);

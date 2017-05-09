@@ -12,7 +12,7 @@ public final class ScalarMethod {
   }
 
   public Tuple2<Matrix, Double> maxEigenvalue(final Matrix X) {
-    Matrix yNew = Matrix.vectorOnes(X.width()).multiply(10);
+    Matrix yNew = Matrix.vectorOnes(X.width()).multiply(1);
 
     double lambdaOld;
     double lambdaNew = 100;
@@ -20,11 +20,12 @@ public final class ScalarMethod {
     int iter = 1;
 
     do {
-      final Matrix yOld = yNew;
+      final Matrix yOld = yNew.infNormalize();
       iter += 1;
       lambdaOld = lambdaNew;
 
       yNew = X.dot(yOld);
+
       lambdaNew = yNew.transposed().dot(yOld).get(0, 0)  / yOld.transposed().dot(yOld).get(0, 0);
     } while (Math.abs(lambdaNew - lambdaOld) > this.eps);
 

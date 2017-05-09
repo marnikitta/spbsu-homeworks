@@ -20,7 +20,7 @@ public final class PowerMethod {
     int iter = 1;
 
     do {
-      final Matrix yOld = yNew;
+      final Matrix yOld = yNew.infNormalize();
       iter += 1;
       lambdaOld = lambdaNew;
 

@@ -1,5 +1,6 @@
 package ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,6 +37,23 @@ public final class Matrix {
     }
   }
 
+  public static Matrix threeDig(final double[] a, final double[] b, final double[] c) {
+    final int n = a.length;
+    final double[][] result = new double[n][n];
+    for (int i = 0; i < n; ++i) {
+      for (int j = 0; j < n; ++j) {
+        if (i == j) {
+          result[i][j] = b[i];
+        } else if (i == j + 1) {
+          result[i][j] = a[i];
+        } else if (i == j - 1) {
+          result[i][j] = c[i];
+        }
+      }
+    }
+    return new Matrix(result);
+  }
+
   public static Matrix fromList(final List<double[]> matrix) {
     final double[][] array = new double[matrix.size()][matrix.get(0).length];
 
@@ -51,6 +69,10 @@ public final class Matrix {
       a[i][0] = b[i];
     }
     return new Matrix(a);
+  }
+
+  public boolean isVector() {
+    return this.width == 1;
   }
 
   public static Matrix ones(final int n) {
@@ -141,6 +163,14 @@ public final class Matrix {
     return new Matrix(result);
   }
 
+  public Matrix divide(final double arg) {
+    return this.multiply(1.0 / arg);
+  }
+
+  public Matrix infNormalize() {
+    return this.divide(this.vectorInfNorm());
+  }
+
   public Matrix dot(final Matrix that) {
     if (this.width() != that.height()) {
       throw new IllegalArgumentException(
@@ -210,6 +240,23 @@ public final class Matrix {
     final double[] result = new double[this.height()];
     for (int i = 0; i < this.height(); ++i) {
       result[i] = this.matrix[i][j];
+    }
+    return result;
+  }
+
+  public Matrix diag() {
+    final double[] result = new double[this.height()];
+    for (int i = 0; i < this.height(); ++i) {
+      result[i] = this.matrix[i][i];
+    }
+    return new Matrix(result);
+
+  }
+
+  public List<Matrix> columns() {
+    final List<Matrix> result = new ArrayList<>();
+    for (int j = 0; j < this.width; ++j) {
+      result.add(new Matrix(this.column(j)));
     }
     return result;
   }
@@ -304,7 +351,7 @@ public final class Matrix {
     final StringBuilder sb = new StringBuilder();
     for (int i = 0; i < array.length; ++i) {
       for (int j = 0; j < array[i].length; ++j) {
-        sb.append(array[i][j]);
+        sb.append(String.format("%10.5f", array[i][j]));
         if (j != array[i].length - 1) {
           sb.append(' ');
         }
