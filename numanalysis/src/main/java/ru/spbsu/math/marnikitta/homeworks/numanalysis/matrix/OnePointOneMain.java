@@ -1,4 +1,4 @@
-import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix;
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
 public final class OnePointOneMain {

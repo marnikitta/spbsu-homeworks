@@ -35,7 +35,7 @@ public final class ThreeDigSolver {
       s[i] = c[i] / (-b[i] - a[i] * s[i - 1]);
       t[i] = (a[i] * t[i - 1] - d[i]) / (-b[i] - a[i] * s[i - 1]);
       if (this.debug) {
-        System.out.println(String.format("s[%d] = %.20f, t[%d] = %.20f", i, s[0], i, t[0]));
+        System.out.println(String.format("s[%d] = %.20f, t[%d] = %.20f", i, s[i], i, t[i]));
       }
     }
 
