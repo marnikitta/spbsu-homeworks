@@ -6,60 +6,34 @@
 
     <groupId>ru.spbsu.math.marnikitta</groupId>
     <artifactId>homeworks</artifactId>
-    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <properties>
-        <testng.version>6.9.10</testng.version>
-        <scala.version>2.11.8</scala.version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <logback.version>1.1.7</logback.version>
-    </properties>
+    <packaging>pom</packaging>
 
     <modules>
+        <module>parent</module>
         <module>sakod</module>
         <module>numanalysis</module>
         <module>dbms</module>
         <module>ms</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.scalanlp</groupId>
-            <artifactId>breeze_2.11</artifactId>
-            <version>0.12</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <!-- java version -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Marshalkin Nikita</name>
+            <email>marnikitta@gmail.com</email>
+            <organization>SPBSU</organization>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+3</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@bitbucket.org:Marnikitta/spbsu-homeworks.git</connection>
+        <developerConnection>scm:git:git@bitbucket.org:Marnikitta/spbsu-homeworks.git</developerConnection>
+        <url>https://bitbucket.org/Marnikitta/spbsu-homeworks</url>
+    </scm>
 </project>

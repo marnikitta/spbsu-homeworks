@@ -2,22 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-    <artifactId>homeworks-sakod</artifactId>
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>homeworks</artifactId>
-        <groupId>ru.spbsu.math.marnikitta</groupId>
+        <artifactId>homeworks-parent</artifactId>
+        <groupId>ru.spbsu.math.marnikitta.homeworks</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../parent</relativePath>
     </parent>
 
-    <modelVersion>4.0.0</modelVersion>
+    <artifactId>homeworks-sakod</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
-            <version>3.5</version>
         </dependency>
     </dependencies>
 </project>

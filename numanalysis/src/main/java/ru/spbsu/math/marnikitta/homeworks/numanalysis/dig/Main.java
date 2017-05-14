@@ -1,6 +1,5 @@
 package ru.spbsu.math.marnikitta.homeworks.numanalysis.dig;
 
-import com.sun.prism.es2.ES2Graphics;
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
 import java.util.function.DoubleUnaryOperator;

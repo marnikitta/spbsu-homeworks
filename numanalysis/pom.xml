@@ -4,65 +4,48 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>homeworks-numanalysis</artifactId>
-
     <parent>
-        <artifactId>homeworks</artifactId>
-        <groupId>ru.spbsu.math.marnikitta</groupId>
+        <artifactId>homeworks-parent</artifactId>
+        <groupId>ru.spbsu.math.marnikitta.homeworks</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../parent</relativePath>
     </parent>
 
-    <properties>
-        <scalatest.version>3.0.0</scalatest.version>
-    </properties>
+    <artifactId>homeworks-numanalysis</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
         </dependency>
         <dependency>
             <groupId>com.quantifind</groupId>
             <artifactId>wisp_2.11</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jool</artifactId>
-            <version>0.9.12</version>
         </dependency>
         <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.11</artifactId>
-            <version>${scalatest.version}</version>
-            <scope>test</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.scalanlp</groupId>
+            <artifactId>breeze_2.11</artifactId>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- SCALA support -->
             <plugin>
                 <groupId>org.scala-tools</groupId>
                 <artifactId>maven-scala-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <sourceDir>src/main/scala</sourceDir>
-                    <jvmArgs>
-                        <jvmArg>-Xms64m</jvmArg>
-                        <jvmArg>-Xmx1024m</jvmArg>
-                    </jvmArgs>
-                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
