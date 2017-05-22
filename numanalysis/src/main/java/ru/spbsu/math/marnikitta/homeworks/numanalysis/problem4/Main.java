@@ -1,11 +1,12 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.dig;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem4;
 
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
+import java.util.Arrays;
 import java.util.function.DoubleUnaryOperator;
 
 public final class Main {
-  public static void main(final String... args) {
+  public static void main(String... args) {
     final double alpha = 0.1;
 
     final DoubleUnaryOperator p = x -> 1;
@@ -26,7 +27,7 @@ public final class Main {
     final double beta1 = 0;
     final double B = 1.0d / (1 + alpha);
 
-    final int n = 100;
+    final int n = 11;
     System.out.println("# Разностный метод для обыкновенного дифференциального уравнения второго порядка");
     System.out.println(String.format("## a = %f, b = %f, n = %d", a, b, n));
     System.out.println();
@@ -49,6 +50,7 @@ public final class Main {
 
     System.out.println("l2 норма вектора погрешности");
     System.out.println(new Matrix(y2).subtract(new Matrix(realY)).vectorInfNorm());
+    System.out.println(Arrays.toString(realY));
     System.out.println();
   }
 }

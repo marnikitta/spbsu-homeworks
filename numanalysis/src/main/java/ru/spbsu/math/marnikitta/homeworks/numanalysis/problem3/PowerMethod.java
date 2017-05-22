@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.eigenvalues;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem3;
 
 import org.jooq.lambda.tuple.Tuple2;
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
@@ -7,11 +7,11 @@ import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 public final class PowerMethod {
   private final double eps;
 
-  public PowerMethod(final double eps) {
+  public PowerMethod(double eps) {
     this.eps = eps;
   }
 
-  public Tuple2<Matrix, Double> maxEigenvalue(final Matrix X) {
+  public Tuple2<Matrix, Double> maxEigenvalue(Matrix X) {
     Matrix yNew = Matrix.vectorOnes(X.width()).multiply(10);
 
     double lambdaOld;

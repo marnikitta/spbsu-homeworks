@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.eigenvalues;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem3;
 
 import org.jooq.lambda.tuple.Tuple2;
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;

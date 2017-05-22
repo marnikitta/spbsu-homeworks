@@ -2,7 +2,7 @@ package ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix;
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
 public final class OnePointOneMain {
-  public static void main(final String[] args) {
+  public static void main(String[] args) {
     new OnePointOneMain().run();
   }
 

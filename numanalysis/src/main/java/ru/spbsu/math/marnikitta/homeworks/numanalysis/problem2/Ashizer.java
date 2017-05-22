@@ -1,10 +1,10 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.iterative;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem2;
 
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
 public final class Ashizer {
 
-  public Matrix ashizeH(final Matrix A, final Matrix b) {
+  public Matrix ashizeH(Matrix A, Matrix b) {
     final double[][] h = new double[A.height()][A.width()];
 
     for (int i = 0; i < A.height(); ++i) {
@@ -20,7 +20,7 @@ public final class Ashizer {
     return new Matrix(h);
   }
 
-  public Matrix ashizeB(final Matrix A, final Matrix b) {
+  public Matrix ashizeB(Matrix A, Matrix b) {
     final double[][] g = new double[b.height()][1];
 
     for (int i = 0; i < b.height(); ++i) {

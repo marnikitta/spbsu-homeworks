@@ -1,7 +1,5 @@
 package ru.spbsu.math.marnikitta.homeworks.numanalysis.cauchy
 
-import ru.spbsu.math.marnikitta.homeworks.numanalysis.interpolation.domain.NewtonInterpolator
-
 import scala.collection.mutable.ListBuffer
 
 object CauchyMain {
@@ -13,6 +11,28 @@ object CauchyMain {
   }
   val N = 10
   val exactResult: Double => Double = x => 2 / (Math.exp(2 * x) + 1)
+
+  def adams(hist: Seq[(Double, Double)], xs: Seq[Double]): Seq[Double] = {
+    var result = ListBuffer[Double]()
+    var currentHist = hist
+    for (x <- xs) {
+      assert(currentHist.size == 5)
+      val next = currentHist.last._2 + adamsNextDeplta(currentHist)
+      currentHist = currentHist.tail ++ Seq((x, next))
+      result += next
+    }
+    result
+  }
+
+  def adamsNextDeplta(tuples: Seq[(Double, Double)]): Double = {
+    val q0 = h * f(tuples.head._1, tuples.head._2)
+    val q1 = h * f(tuples(1)._1, tuples(1)._2)
+    val q2 = h * f(tuples(2)._1, tuples(2)._2)
+    val q3 = h * f(tuples(3)._1, tuples(3)._2)
+    val q4 = h * f(tuples(4)._1, tuples(4)._2)
+
+    1.0d / 720 * (1901 * q4 - 2774 * q3 + 2616 * q2 - 1274 * q1 + 251 * q0)
+  }
 
   def main(args: Array[String]): Unit = {
     val seq = (-2 to N).map(k => x0 + k * h)
@@ -33,11 +53,11 @@ object CauchyMain {
     println()
 
     val adamsSeq = (3 to N).map(k => x0 + k * h)
-    val adamsResult = NewtonInterpolator(taylorSeq.zip(taylorSeq.map(exactResult)))
+    val adamsResult = adams(taylorSeq.zip(taylorSeq.map(taylorResult)), adamsSeq)
     println("Adams result:")
-    println(adamsSeq.map(adamsResult))
+    println(adamsResult)
     println("Adams residuals:")
-    println(adamsSeq.map(exactResult).zip(adamsSeq.map(adamsResult)).map { case (a, b) => Math.abs(a - b) })
+    println(adamsSeq.map(exactResult).zip(adamsResult).map { case (a, b) => Math.abs(a - b) })
 
     println()
 
@@ -67,6 +87,7 @@ object CauchyMain {
 
     println()
 
+    //Совпадает с Эйлером :(
     val eulerCauchyResult = eulerCauchy(eulerSeq)
     println("Euler Cauchy result:")
     println(eulerCauchyResult)
@@ -79,7 +100,7 @@ object CauchyMain {
     val lastX = x0 + h * N
     val realLastY = exactResult(lastX)
     println("Adam residual:")
-    println(Math.abs(realLastY - adamsResult(lastX)))
+    println(Math.abs(realLastY - adamsResult.last))
     println("Runge residual:")
     println(Math.abs(realLastY - rungeResult.last))
     println("Euler residual:")
@@ -90,6 +111,18 @@ object CauchyMain {
     println(Math.abs(realLastY - eulerCauchyResult.last))
   }
 
+  def euler(xWithX0: Seq[Double]): Seq[Double] = {
+    val res: ListBuffer[Double] = ListBuffer()
+    var xn: Double = x0
+    var yn: Double = y0
+    res += yn
+    for (xn <- xWithX0) {
+      yn = yn + h * f(xn, yn)
+      res += yn
+    }
+    res
+  }
+
   def eulerCauchy(xWithX0: Seq[Double]): Seq[Double] = {
     val res: ListBuffer[Double] = ListBuffer()
     var xn: Double = x0
@@ -98,7 +131,7 @@ object CauchyMain {
     for (xn <- xWithX0) {
       val k1 = f(xn, yn)
       val k2 = f(xn + h, yn + h * k1 * k1)
-      yn = yn + h * (k1 + k1) / 2
+      yn = yn + h * (k1 + k2) / 2
       res += yn
     }
     res
@@ -111,19 +144,6 @@ object CauchyMain {
     res += yn
     for (xn <- xWithX0) {
       yn = yn + h * f(xn + h / 2, yn + h / 2 * f(xn, yn))
-      res += yn
-    }
-    res
-  }
-
-
-  def euler(xWithX0: Seq[Double]): Seq[Double] = {
-    val res: ListBuffer[Double] = ListBuffer()
-    var xn: Double = x0
-    var yn: Double = y0
-    res += yn
-    for (xn <- xWithX0) {
-      yn = yn + h * f(xn, yn)
       res += yn
     }
     res

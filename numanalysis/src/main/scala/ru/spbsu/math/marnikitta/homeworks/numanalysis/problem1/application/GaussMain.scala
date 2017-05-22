@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.gauss.application
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem1.application
 
 import breeze.linalg._
 import breeze.numerics._

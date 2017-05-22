@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.gauss.application
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem1.application
 
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.oddroots.domain.SegmentSearcher
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.oddroots.domain.impl.BiSplitRoot

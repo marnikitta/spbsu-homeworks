@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.eigenvalues;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem3;
 
 import org.jooq.lambda.tuple.Tuple2;
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
 public final class EigenMain {
-  public static void main(final String... args) {
+  public static void main(String... args) {
     final Matrix A = new Matrix(new double[][]{
             {-1.482129, -0.039163, 1.082538},
             {-0.039163, 1.139581, 0.016167},

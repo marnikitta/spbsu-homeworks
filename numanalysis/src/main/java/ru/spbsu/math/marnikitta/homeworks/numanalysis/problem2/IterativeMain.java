@@ -1,12 +1,12 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.iterative;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem2;
 
-import ru.spbsu.math.marnikitta.homeworks.numanalysis.gauss.GaussSolver;
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
+import ru.spbsu.math.marnikitta.homeworks.numanalysis.problem1.GaussSolver;
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
 public final class IterativeMain {
 
-  public static void main(final String... args) {
+  public static void main(String... args) {
     new IterativeMain().run();
   }
 
@@ -47,9 +47,14 @@ public final class IterativeMain {
     final SimpleIteration simpleIteration = new SimpleIteration(1.0e-10);
     final Matrix simpleIterationSolution = simpleIteration.solve(H, g);
     System.out.printf("# Решение методом простой итерации:\n" +
-            "%s\n\n" +
-            "## l^inf норма невязки:\n" +
-            "%s\n\n", simpleIterationSolution.niceToString(), A.dot(simpleIterationSolution).subtract(b).vectorInfNorm());
+                    "%s\n\n" +
+                    "## l^inf норма невязки:\n" +
+                    "%s\n\n" +
+                    "## Фактическая погрешность:\n" +
+                    "%s\n\n", simpleIterationSolution.niceToString(),
+            A.dot(simpleIterationSolution).subtract(b).vectorInfNorm(),
+            columnGauss.subtract(simpleIterationSolution).vectorInfNorm()
+    );
 
     final SeidIterations seidIterations = new SeidIterations(1.0e-10);
     final Matrix seidSolution = seidIterations.solve(H, g);

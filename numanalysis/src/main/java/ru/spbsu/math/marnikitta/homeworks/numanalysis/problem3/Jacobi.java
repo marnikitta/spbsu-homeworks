@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.eigenvalues;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem3;
 
 import org.jooq.lambda.tuple.Tuple2;
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
@@ -7,11 +7,11 @@ import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 public final class Jacobi {
   private final double eps;
 
-  public Jacobi(final double eps) {
+  public Jacobi(double eps) {
     this.eps = eps;
   }
 
-  public Tuple2<Matrix, Matrix> eigen(final Matrix A) {
+  public Tuple2<Matrix, Matrix> eigen(Matrix A) {
     Matrix Ak = A;
     Matrix X = Matrix.ones(A.width());
 
@@ -56,7 +56,7 @@ public final class Jacobi {
     return new Tuple2<>(Ak, X);
   }
 
-  private static Matrix Vk(final Matrix a, final int ik, final int jk) {
+  private static Matrix Vk(Matrix a, int ik, int jk) {
     final double d = Math.sqrt(StrictMath.pow(a.get(ik, ik) - a.get(jk, jk), 2) + 4 * a.get(ik, jk) * a.get(ik, jk));
     final double c = Math.sqrt(0.5 * (1 + Math.abs(a.get(ik, ik) - a.get(jk, jk)) / d));
     final double s = Math.signum(a.get(ik, jk) * (a.get(ik, ik) - a.get(jk, jk)))

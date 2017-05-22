@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.gauss;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem1;
 
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
@@ -6,11 +6,11 @@ import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 public final class GaussSolver {
   private final double eps;
 
-  public GaussSolver(final double eps) {
+  public GaussSolver(double eps) {
     this.eps = eps;
   }
 
-  private void simpleGauss(final double[][] a) {
+  private void simpleGauss(double[][] a) {
     final int width = a.length;
     final int sumWidth = a[0].length;
     final int height = a.length;
@@ -54,7 +54,7 @@ public final class GaussSolver {
   }
 
 
-  public Matrix inverseColumnwiseGauss(final Matrix matrix) {
+  public Matrix inverseColumnwiseGauss(Matrix matrix) {
     if (matrix.width() != matrix.height()) {
       throw new IllegalArgumentException("Matrix should be square");
     }
@@ -126,7 +126,7 @@ public final class GaussSolver {
     return new Matrix(result);
   }
 
-  public Matrix solveColumnwiseGauss(final Matrix A, final Matrix b) {
+  public Matrix solveColumnwiseGauss(Matrix A, Matrix b) {
     if (A.width() != A.height()) {
       throw new IllegalArgumentException("Matrix should be square");
     }
@@ -193,7 +193,7 @@ public final class GaussSolver {
     return new Matrix(result);
   }
 
-  public Matrix solveSimpleGauss(final Matrix A, final Matrix b) {
+  public Matrix solveSimpleGauss(Matrix A, Matrix b) {
     if (A.width() != A.height()) {
       throw new IllegalArgumentException("Matrix should be square");
     }
@@ -211,20 +211,4 @@ public final class GaussSolver {
     return new Matrix(result);
   }
 
-  public static String onlyAReorder(final double[][] array, final int[] reorder) {
-    final StringBuilder sb = new StringBuilder(array.length * reorder.length);
-    for (int i = 0; i < array.length; ++i) {
-      for (int j = 0; j < reorder.length; ++j) {
-        sb.append(array[i][reorder[j]]);
-        if (j != array[i].length - 1) {
-          sb.append(' ');
-        }
-      }
-      if (i != array.length - 1) {
-        sb.append('\n');
-      }
-    }
-    return sb.toString();
-
-  }
 }

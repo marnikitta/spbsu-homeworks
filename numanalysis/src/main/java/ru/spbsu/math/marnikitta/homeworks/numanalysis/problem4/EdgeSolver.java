@@ -1,4 +1,4 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.dig;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem4;
 
 import java.util.function.DoubleUnaryOperator;
 
@@ -7,14 +7,14 @@ public final class EdgeSolver {
   private final boolean secondOrder;
   private final ThreeDigSolver solver = new ThreeDigSolver(true);
 
-  public EdgeSolver(final int n, final boolean secondOrder) {
+  public EdgeSolver(int n, boolean secondOrder) {
     this.n = n;
     this.secondOrder = secondOrder;
   }
 
-  public double[] solve(final DoubleUnaryOperator p, final DoubleUnaryOperator q, final DoubleUnaryOperator r,
-                        final DoubleUnaryOperator f, final double a, final double b, final double alpha0,
-                        final double alpha1, final double a1, final double beta0, final double beta1, final double b1) {
+  public double[] solve(DoubleUnaryOperator p, DoubleUnaryOperator q, DoubleUnaryOperator r,
+                        DoubleUnaryOperator f, double a, double b, double alpha0,
+                        double alpha1, double a1, double beta0, double beta1, double b1) {
     final double[] pp = EdgeSolver.granulate(p, a, b, this.n);
     final double[] qq = EdgeSolver.granulate(q, a, b, this.n);
     final double[] rr = EdgeSolver.granulate(r, a, b, this.n);
@@ -34,15 +34,7 @@ public final class EdgeSolver {
       GG[i] = ff[i] * h * h;
     }
 
-    if (!this.secondOrder) {
-      BB[0] = alpha0 * h - alpha1;
-      CC[0] = alpha1;
-      GG[0] = a1 * h;
-
-      AA[this.n - 1] = -beta1;
-      BB[this.n - 1] = beta0 * h + beta1;
-      GG[this.n - 1] = b1 * h;
-    } else {
+    if (this.secondOrder) {
       BB[0] = 2 * alpha0 * h + alpha1 * (AA[1] / CC[1] - 3);
       CC[0] = alpha1 * (BB[1] / CC[1] + 4);
       GG[0] = 2 * a1 * h + alpha1 * GG[1] / CC[1];
@@ -50,12 +42,20 @@ public final class EdgeSolver {
       AA[this.n - 1] = -beta1 * (BB[this.n - 2] / AA[this.n - 2] + 4);
       BB[this.n - 1] = 2 * beta0 * h + beta1 * (3 - CC[this.n - 2] / AA[this.n - 2]);
       GG[this.n - 1] = 2 * b1 * h - beta1 * GG[this.n - 2] / AA[this.n - 2];
+    } else {
+      BB[0] = alpha0 * h - alpha1;
+      CC[0] = alpha1;
+      GG[0] = a1 * h;
+
+      AA[this.n - 1] = -beta1;
+      BB[this.n - 1] = beta0 * h + beta1;
+      GG[this.n - 1] = b1 * h;
     }
 
     return this.solver.solve(AA, BB, CC, GG);
   }
 
-  public static double[] granulate(final DoubleUnaryOperator f, final double a, final double b, final int n) {
+  public static double[] granulate(DoubleUnaryOperator f, double a, double b, int n) {
     final double step = (b - a) / (n - 1);
     final double[] result = new double[n];
 

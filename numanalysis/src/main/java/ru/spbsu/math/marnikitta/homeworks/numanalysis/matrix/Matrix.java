@@ -10,7 +10,7 @@ public final class Matrix {
   private final int width;
   private final int height;
 
-  public Matrix(final double[][] matrix) {
+  public Matrix(double[][] matrix) {
     this.height = matrix.length;
     this.width = matrix[0].length;
 
@@ -26,7 +26,7 @@ public final class Matrix {
     }
   }
 
-  public Matrix(final double[] vector) {
+  public Matrix(double[] vector) {
     this.height = vector.length;
     this.width = 1;
 
@@ -37,7 +37,7 @@ public final class Matrix {
     }
   }
 
-  public static Matrix threeDig(final double[] a, final double[] b, final double[] c) {
+  public static Matrix threeDig(double[] a, double[] b, double[] c) {
     final int n = a.length;
     final double[][] result = new double[n][n];
     for (int i = 0; i < n; ++i) {
@@ -54,28 +54,7 @@ public final class Matrix {
     return new Matrix(result);
   }
 
-  public static Matrix fromList(final List<double[]> matrix) {
-    final double[][] array = new double[matrix.size()][matrix.get(0).length];
-
-    for (int i = 0; i < matrix.size(); ++i) {
-      array[i] = matrix.get(i);
-    }
-    return new Matrix(array);
-  }
-
-  public static Matrix vector(final double[] b) {
-    final double[][] a = new double[b.length][1];
-    for (int i = 0; i < b.length; ++i) {
-      a[i][0] = b[i];
-    }
-    return new Matrix(a);
-  }
-
-  public boolean isVector() {
-    return this.width == 1;
-  }
-
-  public static Matrix ones(final int n) {
+  public static Matrix ones(int n) {
     final double[][] result = new double[n][n];
     for (int i = 0; i < n; ++i) {
       result[i][i] = 1;
@@ -83,22 +62,12 @@ public final class Matrix {
     return new Matrix(result);
   }
 
-  public static Matrix vectorOnes(final int n) {
+  public static Matrix vectorOnes(int n) {
     final double[][] result = new double[n][1];
     for (int i = 0; i < n; ++i) {
       result[i][0] = 1;
     }
     return new Matrix(result);
-  }
-
-  public double vectorNorm(final int p) {
-    double result = 0;
-    for (int i = 0; i < this.height(); ++i) {
-      for (int j = 0; j < this.width(); ++j) {
-        result += StrictMath.pow(Math.abs(this.get(i, j)), p);
-      }
-    }
-    return StrictMath.pow(result, 1.0d / p);
   }
 
   public double trace() {
@@ -143,6 +112,18 @@ public final class Matrix {
     return result;
   }
 
+  public Matrix upperDiag() {
+    final double[][] upper = new double[this.height][this.width];
+    for (int i = 0; i < this.height; ++i) {
+      for (int j = 0; j < this.width; ++j) {
+        if (j >= i) {
+          upper[i][j] = this.matrix[i][j];
+        }
+      }
+    }
+    return new Matrix(upper);
+  }
+
   public Matrix transposed() {
     final double[][] result = new double[this.width][this.height];
     for (int i = 0; i < this.height; ++i) {
@@ -153,7 +134,7 @@ public final class Matrix {
     return new Matrix(result);
   }
 
-  public Matrix multiply(final double arg) {
+  public Matrix multiply(double arg) {
     final double[][] result = new double[this.height][this.width];
     for (int i = 0; i < this.height; ++i) {
       for (int j = 0; j < this.width; ++j) {
@@ -163,7 +144,7 @@ public final class Matrix {
     return new Matrix(result);
   }
 
-  public Matrix divide(final double arg) {
+  public Matrix divide(double arg) {
     return this.multiply(1.0 / arg);
   }
 
@@ -171,7 +152,7 @@ public final class Matrix {
     return this.divide(this.vectorInfNorm());
   }
 
-  public Matrix dot(final Matrix that) {
+  public Matrix dot(Matrix that) {
     if (this.width() != that.height()) {
       throw new IllegalArgumentException(
               String.format("Width of the first matrix should equal height of second, %d != %d ",
@@ -191,7 +172,7 @@ public final class Matrix {
     return new Matrix(result);
   }
 
-  public Matrix add(final Matrix that) {
+  public Matrix add(Matrix that) {
     if (this.height() != that.height() || this.width() != that.width()) {
       throw new IllegalArgumentException("");
     }
@@ -217,7 +198,7 @@ public final class Matrix {
     return new Matrix(result);
   }
 
-  public Matrix subtract(final Matrix that) {
+  public Matrix subtract(Matrix that) {
     return this.add(that.negate());
   }
 
@@ -230,13 +211,7 @@ public final class Matrix {
   }
 
 
-  public double[] row(final int i) {
-    final double[] result = new double[this.width()];
-    System.arraycopy(this.matrix[i], 0, result, 0, this.width());
-    return result;
-  }
-
-  public double[] column(final int j) {
+  public double[] column(int j) {
     final double[] result = new double[this.height()];
     for (int i = 0; i < this.height(); ++i) {
       result[i] = this.matrix[i][j];
@@ -261,7 +236,7 @@ public final class Matrix {
     return result;
   }
 
-  public Matrix concat(final Matrix that) {
+  public Matrix concat(Matrix that) {
     if (this.height() != that.height()) {
       throw new IllegalArgumentException("Heights should be equal");
     }
@@ -278,7 +253,7 @@ public final class Matrix {
     return new Matrix(result);
   }
 
-  public double get(final int i, final int j) {
+  public double get(int i, int j) {
     return this.matrix[i][j];
   }
 
@@ -300,7 +275,7 @@ public final class Matrix {
     return Matrix.det(this.matrix, this.width());
   }
 
-  private static double det(final double[][] A, final int N) {
+  private static double det(double[][] A, int N) {
     if (N == 1) {
       return A[0][0];
     } else if (N == 2) {
@@ -328,7 +303,7 @@ public final class Matrix {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || this.getClass() != o.getClass()) return false;
 
@@ -347,7 +322,7 @@ public final class Matrix {
     return result;
   }
 
-  public static String niceToString(final double[][] array) {
+  public static String niceToString(double[][] array) {
     final StringBuilder sb = new StringBuilder();
     for (int i = 0; i < array.length; ++i) {
       for (int j = 0; j < array[i].length; ++j) {

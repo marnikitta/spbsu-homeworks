@@ -1,20 +1,18 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.iterative;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem2;
 
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
 import java.util.Arrays;
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
-public final class UpperRelaxation {
+public final class SeidIterations {
   private final double eps;
-  private final double q;
 
-  public UpperRelaxation(final double eps, final double q) {
+  public SeidIterations(double eps) {
     this.eps = eps;
-    this.q = q;
   }
 
-  public Matrix solve(final Matrix H, final Matrix g) {
+  public Matrix solve(Matrix H, Matrix g) {
     double[] xOld = new double[H.width()];
     double[] xNew = new double[H.width()];
 
@@ -28,29 +26,30 @@ public final class UpperRelaxation {
       final double[] tmp = xOld;
       xOld = xNew;
       xNew = tmp;
+      Arrays.fill(xNew, 0);
 
       for (int i = 0; i < xNew.length; ++i) {
-        double tempI = 0;
-
         for (int j = 0; j < i; ++j) {
-          tempI += H.get(i, j) * xNew[j];
+          xNew[i] += H.get(i, j) * xNew[j];
         }
 
         for (int j = i; j < xNew.length; ++j) {
-          tempI += H.get(i, j) * xOld[j];
+          xNew[i] += H.get(i, j) * xOld[j];
         }
 
-        xNew[i] =  xOld[i] + this.q * (tempI - xOld[i] + g.get(i, 0));
+        xNew[i] += g.get(i, 0);
       }
       iter += 1;
-    } while (UpperRelaxation.vectorInf(xNew, xOld) > this.eps);
+    } while (SeidIterations.vectorInf(xNew, xOld) > this.eps);
 
-    System.out.println(">> UpperRelaxation: iterations: " + iter);
+    System.out.println(">> SeidIterations: a posteriori: " + H.upperDiag().matrixInfNorm() / (1 - H.matrixInfNorm())
+            * SeidIterations.vectorInf(xNew, xOld));
+    System.out.println(">> SeidIterations: iterations: " + iter);
 
     return new Matrix(xNew);
   }
 
-  private static double vectorInf(final double[] x1, final double[] x2) {
+  private static double vectorInf(double[] x1, double[] x2) {
     double result = -1;
     for (int i = 0; i < x1.length; ++i) {
       result = Math.max(Math.abs(x1[i] - x2[i]), result);

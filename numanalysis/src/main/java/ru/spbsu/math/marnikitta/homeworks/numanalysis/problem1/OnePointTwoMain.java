@@ -1,11 +1,11 @@
-package ru.spbsu.math.marnikitta.homeworks.numanalysis.gauss;
+package ru.spbsu.math.marnikitta.homeworks.numanalysis.problem1;
 
 import ru.spbsu.math.marnikitta.homeworks.numanalysis.matrix.Matrix;
 
 @SuppressWarnings({"UseOfSystemOutOrSystemErr", "StandardVariableNames"})
 public final class OnePointTwoMain {
 
-  public static void main(final String... args) {
+  public static void main(String... args) {
     new OnePointTwoMain().run();
   }
 
